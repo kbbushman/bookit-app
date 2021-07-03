@@ -4,3 +4,4 @@
 
 - React
 - Bootstrap
+- SCSS
