@@ -1,0 +1,15 @@
+@import './colors.scss';
+@import './header.scss';
+
+.btn-bi-main {
+  color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $primary-dark;
+    background-color: $primary-color;
+    border-color: $primary-dark;
+  }
+}
