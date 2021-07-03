@@ -1,9 +1,9 @@
-import './App.css';
+import Header from './components/shared/Header';
 
 function App() {
   return (
     <div>
-      <h1>BookIt</h1>
+      <Header />
     </div>
   );
 }
