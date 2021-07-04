@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOneRental } from '../actions';
+import { capitalize } from '../utils/helpers';
 
 function RentalDetailPage() {
   const { id } = useParams();
@@ -34,7 +35,7 @@ function RentalDetailPage() {
                 {rental.shared && 'Shared'} {rental.category}
               </h2>
               <h1 className="rental-title">{rental.title}</h1>
-              <h2 className="rental-city">{rental.city}</h2>
+              <h2 className="rental-city">{capitalize(rental.city)}</h2>
               <div className="rental-room-info">
                 <span>
                   <i className="fa fa-building"></i>
