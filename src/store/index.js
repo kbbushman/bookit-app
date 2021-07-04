@@ -1,9 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 import { rentals } from './reducers/rentals';
+import { rental } from './reducers/rental';
 
 export function initStore() {
   const reducer = combineReducers({
     rentals,
+    rental,
   });
 
   const reduxDevTools =
