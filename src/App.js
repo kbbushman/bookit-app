@@ -6,24 +6,22 @@ import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
-    <>
+    <Router>
       <Header />
       <main>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <Route path="/register">
-              <RegisterPage />
-            </Route>
-          </Switch>
-        </Router>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage />
+          </Route>
+        </Switch>
       </main>
-    </>
+    </Router>
   );
 }
 
