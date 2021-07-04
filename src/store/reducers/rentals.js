@@ -1,4 +1,4 @@
-import { FETCH_RENTALS, CREATE_RENTAL } from '../../actions';
+import { FETCH_RENTALS, CREATE_RENTAL } from 'actions';
 
 export function rentals(state = [], action) {
   switch (action.type) {

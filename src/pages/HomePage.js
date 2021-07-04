@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import RentalCard from '../components/rental/RentalCard';
-import { fetchRentals } from '../actions';
+import RentalCard from 'components/rental/RentalCard';
+import { fetchRentals } from 'actions';
 
 function HomePage() {
   const dispatch = useDispatch();

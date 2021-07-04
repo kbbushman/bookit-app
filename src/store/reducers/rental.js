@@ -1,4 +1,4 @@
-import { FETCH_ONE_RENTAL } from '../../actions';
+import { FETCH_ONE_RENTAL } from 'actions';
 
 export function rental(state = {}, action) {
   switch (action.type) {

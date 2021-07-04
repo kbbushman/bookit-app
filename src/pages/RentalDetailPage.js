@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { fetchOneRental } from '../actions';
-import { capitalize } from '../utils/helpers';
+import { fetchOneRental } from 'actions';
+import { capitalize } from 'utils/helpers';
 
 function RentalDetailPage() {
   const { id } = useParams();

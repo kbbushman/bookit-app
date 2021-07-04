@@ -1,8 +1,8 @@
 import { Switch, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import RentalDetailPage from './pages/RentalDetailPage';
+import HomePage from 'pages/HomePage';
+import LoginPage from 'pages/LoginPage';
+import RegisterPage from 'pages/RegisterPage';
+import RentalDetailPage from 'pages/RentalDetailPage';
 
 function Routes() {
   return (

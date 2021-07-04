@@ -1,4 +1,4 @@
-import { rentalData } from '../store/data';
+import { rentalData } from 'store/data';
 
 export const FETCH_RENTALS = 'FETCH_RENTALS';
 export const FETCH_ONE_RENTAL = 'FETCH_ONE_RENTAL';
