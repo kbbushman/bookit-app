@@ -2,6 +2,25 @@
 @import './header.scss';
 @import './home-page.scss';
 
+html,
+body {
+  height: 100%;
+}
+
+.type- {
+  &apartment {
+    color: #a72da3;
+  }
+
+  &house {
+    color: #bf1818;
+  }
+
+  &condo {
+    color: #d68000;
+  }
+}
+
 .btn-bi-main {
   color: $primary-color;
   border-color: $primary-color;

@@ -4,7 +4,7 @@ function RentalCard({ rental }) {
       <div className="card bi-card">
         <img className="card-img-top" src={rental.image} alt={rental.title} />
         <div className="card-body">
-          <h6 className="card-subtitle mb-0 text-muted">
+          <h6 className={`card-subtitle mb-0 type-${rental.category}`}>
             {rental.shared && 'Shared'} {rental.category} &#183; {rental.city}
           </h6>
           <h5 className="card-title big-font">{rental.title}</h5>
