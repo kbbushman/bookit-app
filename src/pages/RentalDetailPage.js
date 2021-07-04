@@ -1,15 +1,27 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOneRental } from '../actions';
+
 function RentalDetailPage() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const rental = useSelector((state) => state.rental);
+
+  useEffect(() => {
+    dispatch(fetchOneRental(id));
+  }, [id, dispatch]);
+
   return (
     <section id="rentalDetails">
       <div className="upper-section">
         <div className="row">
           <div className="col-md-6">
-            {/* <!-- TODO: Display rental image --> */}
-            <img src="#" alt="" />
+            <img src={rental.image} alt={rental.title} />
           </div>
           <div className="col-md-6">
-            {/* <!-- TODO: Display rental image --> */}
-            <img src="#" alt="" />
+            {/* <!-- TODO: Display Rental Map --> */}
+            <img src={rental.image} alt={rental.title} />
           </div>
         </div>
       </div>
@@ -18,28 +30,24 @@ function RentalDetailPage() {
         <div className="row">
           <div className="col-md-8">
             <div className="rental">
-              {/* <!-- TODO: Display shared category --> */}
-              <h2 className="rental-type">true house</h2>
-              {/* <!-- TODO: Display title --> */}
-              <h1 className="rental-title">Some Title</h1>
-              {/* <!-- TODO: Display city --> */}
-              <h2 className="rental-city">New York</h2>
+              <h2 className={`rental-type type-${rental.category}`}>
+                {rental.shared && 'Shared'} {rental.category}
+              </h2>
+              <h1 className="rental-title">{rental.title}</h1>
+              <h2 className="rental-city">{rental.city}</h2>
               <div className="rental-room-info">
-                {/* <!-- TODO: Display numOfRooms --> */}
                 <span>
-                  <i className="fa fa-building"></i>4 bedrooms
+                  <i className="fa fa-building"></i>
+                  {rental.numOfRooms} bedrooms
                 </span>
-                {/* // <!-- TODO: Display numOfRooms + 4 --> */}
                 <span>
-                  <i className="fa fa-user"></i> 8 guests
+                  <i className="fa fa-user"></i> {rental.numOfRooms + 4} guests
                 </span>
-                {/* // <!-- TODO: Display numOfRooms + 2 --> */}
                 <span>
-                  <i className="fa fa-bed"></i> 6 beds
+                  <i className="fa fa-bed"></i> {rental.numOfRooms + 2} beds
                 </span>
               </div>
-              {/* <!-- TODO: Display description --> */}
-              <p className="rental-description">Some Description</p>
+              <p className="rental-description">{rental.description}</p>
               <hr />
               <div className="rental-assets">
                 <h3 className="title">Assets</h3>
