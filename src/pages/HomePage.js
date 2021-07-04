@@ -9,7 +9,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(fetchRentals());
-  }, []);
+  }, [dispatch]);
 
   const renderRentals = () => {
     return rentals.map((rental) => (
