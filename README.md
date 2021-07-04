@@ -3,5 +3,6 @@
 ### Technologies Used:
 
 - React
+- Redux
 - Bootstrap
 - SCSS
