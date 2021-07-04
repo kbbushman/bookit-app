@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <main className="container">
+      <main className="container bi-container">
         <Routes />
       </main>
     </Router>
