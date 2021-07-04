@@ -1,10 +1,12 @@
+import { NavLink, Link } from 'react-router-dom';
+
 function Header() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           BookIt
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -31,51 +33,51 @@ function Header() {
 
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">
+              <NavLink className="nav-link" aria-current="page" exact to="/">
                 Home
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item dropdown">
-              <a
+              <NavLink
                 className="nav-link dropdown-toggle"
-                href="#"
+                to="/manage"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Manage
-              </a>
+              </NavLink>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="#">
                     Action
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="#">
                     Another action
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="#">
                     Something else here
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">
+              <NavLink className="nav-link" aria-current="page" to="/login">
                 Login
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">
+              <NavLink className="nav-link" aria-current="page" to="/register">
                 Register
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>
