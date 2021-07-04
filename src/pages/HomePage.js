@@ -48,10 +48,8 @@ function HomePage() {
 
   return (
     <div className="card-list">
-      <div className="container">
-        <h1 className="page-title">Your Home All Around the World</h1>
-        <div className="row">{renderRentals()}</div>
-      </div>
+      <h1 className="page-title">Your Home All Around the World</h1>
+      <div className="row">{renderRentals()}</div>
     </div>
   );
 }
