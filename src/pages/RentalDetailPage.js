@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fetchOneRental } from '../actions';
 import { capitalize } from '../utils/helpers';
 
@@ -51,28 +52,28 @@ function RentalDetailPage() {
               <p className="rental-description">{rental.description}</p>
               <hr />
               <div className="rental-assets">
-                <h3 className="title">Assets</h3>
+                <h3 className="title">Features</h3>
                 <div className="row">
                   <div className="col-md-6">
                     <span>
-                      <i className="fa fa-asterisk"></i> Cooling
+                      <FontAwesomeIcon icon="asterisk" /> Cooling
                     </span>
                     <span>
-                      <i className="fa fa-thermometer"></i> Heating
+                      <FontAwesomeIcon icon="fire" /> Heating
                     </span>
                     <span>
-                      <i className="fa fa-location-arrow"></i> Iron
+                      <FontAwesomeIcon icon="location-arrow" /> Iron
                     </span>
                   </div>
                   <div className="col-md-6">
                     <span>
-                      <i className="fa fa-desktop"></i> Working area
+                      <FontAwesomeIcon icon="desktop" /> Working area
                     </span>
                     <span>
-                      <i className="fa fa-cube"></i> Washing machine
+                      <FontAwesomeIcon icon="soap" /> Washing machine
                     </span>
                     <span>
-                      <i className="fa fa-cube"></i> Dishwasher
+                      <FontAwesomeIcon icon="archive" /> Dishwasher
                     </span>
                   </div>
                 </div>
