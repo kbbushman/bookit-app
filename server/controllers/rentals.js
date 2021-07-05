@@ -1,86 +1,53 @@
-const db = require('../models');
+const { Rental } = require('../models');
 
-exports.getRentals = (req, res) => {
-  db.Rental.find({}, (err, rentals) => {
-    if (err) {
-      return res.status(422).json({
-        errors: [
-          {
-            title: 'Rental Error!',
-            message:
-              'An error occurred while retrieving rentals. Please try again.',
-          },
-        ],
-      });
-    }
-
+exports.getRentals = async (req, res) => {
+  try {
+    const rentals = await Rental.find({});
     res.json(rentals);
-  });
+  } catch (err) {
+    Rental.sendError(res, {
+      status: 422,
+      message: 'An error occurred while retrieving rentals.',
+    });
+  }
 };
 
-exports.getRentalById = (req, res) => {
-  const { id } = req.params;
-  db.Rental.findById(id, (err, rental) => {
-    if (err) {
-      return res.status(422).json({
-        errors: [
-          {
-            title: 'Rental Error!',
-            message:
-              'An error occurred while retrieving the requested rental. Please try again.',
-          },
-        ],
-      });
-    }
-
+exports.getRentalById = async (req, res) => {
+  try {
+    const rental = await Rental.findById(req.params.id);
     res.json(rental);
-  });
+  } catch (err) {
+    Rental.sendError(res, {
+      status: 422,
+      message: 'An error occurred while retrieving the requested rental.',
+    });
+  }
 };
 
-exports.createRental = (req, res) => {
-  const rentalData = req.body;
-
-  db.Rental.create(rentalData, (err, newRental) => {
-    if (err) {
-      return res.status(422).json({
-        errors: [
-          {
-            title: 'Rental Error!',
-            message:
-              'An error occurred while creating the new rental. Please try again.',
-          },
-        ],
-      });
-    }
-
+exports.createRental = async (req, res) => {
+  try {
+    const newRental = await Rental.create(req.body);
     res.status(201).json(newRental);
-  });
+  } catch (err) {
+    Rental.sendError(res, {
+      status: 422,
+      message: 'An error occurred while creating the new rental.',
+    });
+  }
 };
 
-exports.updateRental = (req, res) => {
-  const { id } = req.params;
-
+exports.updateRental = async (req, res) => {
   // TODO: Finish update
-  return res.status(422).json({
-    errors: [
-      {
-        title: 'Server Error!',
-        message: 'This rental update endpoint has not been completed.',
-      },
-    ],
+  return Rental.sendError(res, {
+    status: 500,
+    message: 'This rental update endpoint has not been completed.',
   });
 };
 
-exports.deleteRental = (req, res) => {
-  const { id } = req.params;
-
+exports.deleteRental = async (req, res) => {
   // TODO: Finish delete
-  return res.status(422).json({
-    errors: [
-      {
-        title: 'Server Error!',
-        message: 'This rental delete endpoint has not been completed.',
-      },
-    ],
+  return Rental.sendError(res, {
+    status: 500,
+    message: 'This rental delete endpoint has not been completed.',
   });
 };
