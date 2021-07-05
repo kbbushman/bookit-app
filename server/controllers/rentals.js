@@ -1,3 +1,5 @@
+const db = require('../models');
+
 const rentals = [
   {
     _id: Math.random().toString(32).slice(2),
