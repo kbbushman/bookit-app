@@ -1,23 +1,28 @@
 import axios from 'axios';
-import * as actionTypes from './actionTypes';
+import {
+  FETCH_RENTALS,
+  FETCH_RENTALS_SUCCESS,
+  FETCH_RENTALS_FAILURE,
+  FETCH_ONE_RENTAL,
+  FETCH_ONE_RENTAL_SUCCESS,
+  FETCH_ONE_RENTAL_FAILURE,
+  CREATE_RENTAL,
+  CREATE_RENTAL_SUCCESS,
+  CREATE_RENTAL_FAILURE,
+} from './actionTypes';
 
 const BASE_URL = '/api/v1/rentals/';
 
 export function fetchRentals() {
   return async function (dispatch) {
-    dispatch({
-      type: actionTypes.FETCH_RENTALS,
-    });
+    dispatch({ type: FETCH_RENTALS });
 
     try {
       const { data } = await axios.get(BASE_URL);
-      dispatch({
-        type: actionTypes.FETCH_RENTALS_SUCCESS,
-        rentals: data,
-      });
+      dispatch({ type: FETCH_RENTALS_SUCCESS, rentals: data });
     } catch (err) {
       dispatch({
-        type: actionTypes.FETCH_RENTALS_FAILURE,
+        type: FETCH_RENTALS_FAILURE,
         errors: err.response.data.errors || err.message,
       });
     }
@@ -26,19 +31,14 @@ export function fetchRentals() {
 
 export function fetchOneRental(id) {
   return async function (dispatch) {
-    dispatch({
-      type: actionTypes.FETCH_ONE_RENTAL,
-    });
+    dispatch({ type: FETCH_ONE_RENTAL });
 
     try {
       const { data } = await axios.get(BASE_URL + id);
-      dispatch({
-        type: actionTypes.FETCH_ONE_RENTAL_SUCCESS,
-        rental: data,
-      });
+      dispatch({ type: FETCH_ONE_RENTAL_SUCCESS, rental: data });
     } catch (err) {
       dispatch({
-        type: actionTypes.FETCH_ONE_RENTAL_FAILURE,
+        type: FETCH_ONE_RENTAL_FAILURE,
         errors: err.response.data.errors || err.message,
       });
     }
@@ -47,19 +47,14 @@ export function fetchOneRental(id) {
 
 export function createRental(rental) {
   return async function (dispatch) {
-    dispatch({
-      type: actionTypes.CREATE_RENTAL,
-    });
+    dispatch({ type: CREATE_RENTAL });
 
     try {
       const { data } = await axios.post(BASE_URL, rental);
-      dispatch({
-        type: actionTypes.CREATE_RENTAL_SUCCESS,
-        rental: data,
-      });
+      dispatch({ type: CREATE_RENTAL_SUCCESS, rental: data });
     } catch (err) {
       dispatch({
-        type: actionTypes.CREATE_RENTAL_FAILURE,
+        type: CREATE_RENTAL_FAILURE,
         errors: err.response.data.errors || err.message,
       });
     }
