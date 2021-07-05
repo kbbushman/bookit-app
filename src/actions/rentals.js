@@ -1,30 +1,39 @@
-import { rentalData } from 'store/data';
+import axios from 'axios';
+import * as actionTypes from './actionTypes';
 
-export const FETCH_RENTALS = 'FETCH_RENTALS';
-export const FETCH_ONE_RENTAL = 'FETCH_ONE_RENTAL';
-export const CREATE_RENTAL = 'CREATE_RENTAL';
+const BASE_URL = '/api/v1/rentals/';
 
 export function fetchRentals() {
-  return {
-    type: FETCH_RENTALS,
-    rentals: rentalData,
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(BASE_URL);
+      dispatch({
+        type: actionTypes.FETCH_RENTALS,
+        rentals: data,
+      });
+    } catch (err) {
+      // TODO: Handle error
+    }
   };
 }
 
 export function fetchOneRental(id) {
-  const rental = rentalData.find((rental) => {
-    return rental._id === id;
-  });
-
-  return {
-    type: FETCH_ONE_RENTAL,
-    rental,
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(BASE_URL + id);
+      dispatch({
+        type: actionTypes.FETCH_ONE_RENTAL,
+        rental: data,
+      });
+    } catch (err) {
+      // TODO: Handle error
+    }
   };
 }
 
 export function createRental(rental) {
   return {
-    type: CREATE_RENTAL,
+    type: actionTypes.CREATE_RENTAL,
     rental,
   };
 }
