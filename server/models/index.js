@@ -12,3 +12,7 @@ mongoose
   .connect(config.MONGODB_URI, options)
   .then(() => console.log('MongoDB connected successfully...'))
   .catch((err) => console.log(err));
+
+module.exports = {
+  Rental: require('./Rental'),
+};
