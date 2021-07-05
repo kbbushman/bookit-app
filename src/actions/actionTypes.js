@@ -1,0 +1,3 @@
+export const FETCH_RENTALS = 'FETCH_RENTALS';
+export const FETCH_ONE_RENTAL = 'FETCH_ONE_RENTAL';
+export const CREATE_RENTAL = 'CREATE_RENTAL';
