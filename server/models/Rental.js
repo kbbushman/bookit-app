@@ -47,4 +47,12 @@ const rentalSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+rentalSchema.methods.sendError = function (res, config) {
+  const { status, message } = config;
+
+  return res.status(status).json({
+    errors: [{ title: 'Rental Error!', message }],
+  });
+};
+
 module.exports = mongoose.model('Rental', rentalSchema);
