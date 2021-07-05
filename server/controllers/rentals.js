@@ -1,75 +1,86 @@
 const db = require('../models');
 
-const rentals = [
-  {
-    _id: Math.random().toString(32).slice(2),
-    title: 'Nice view on ocean',
-    city: 'san francisco',
-    category: 'condo',
-    image: 'http://via.placeholder.com/350x250',
-    numOfRooms: 4,
-    shared: true,
-    description: 'Very nice apartment in center of the city.',
-    dailyPrice: 43,
-  },
-  {
-    _id: Math.random().toString(32).slice(2),
-    title: 'Modern apartment in center',
-    city: 'new york',
-    category: 'apartment',
-    image: 'http://via.placeholder.com/350x250',
-    numOfRooms: 1,
-    shared: false,
-    description: 'Very nice apartment in center of the city.',
-    dailyPrice: 11,
-  },
-  {
-    _id: Math.random().toString(32).slice(2),
-    title: 'Old house in nature',
-    city: 'bratislava',
-    category: 'house',
-    image: 'http://via.placeholder.com/350x250',
-    numOfRooms: 5,
-    shared: true,
-    description: 'Very nice apartment in center of the city.',
-    dailyPrice: 23,
-  },
-];
-
 exports.getRentals = (req, res) => {
-  res.json(rentals);
+  db.Rental.find({}, (err, rentals) => {
+    if (err) {
+      return res.status(422).json({
+        errors: [
+          {
+            title: 'Rental Error!',
+            message:
+              'An error occurred while retrieving rentals. Please try again.',
+          },
+        ],
+      });
+    }
+
+    res.json(rentals);
+  });
 };
 
 exports.getRentalById = (req, res) => {
   const { id } = req.params;
-  const rental = rentals.find((r) => r._id === id);
-  res.json(rental);
+  db.Rental.findById(id, (err, rental) => {
+    if (err) {
+      return res.status(422).json({
+        errors: [
+          {
+            title: 'Rental Error!',
+            message:
+              'An error occurred while retrieving the requested rental. Please try again.',
+          },
+        ],
+      });
+    }
+
+    res.json(rental);
+  });
 };
 
 exports.createRental = (req, res) => {
-  const newRental = req.body;
-  newRental._id = Math.random().toString(32).slice(2);
-  rentals.push(newRental);
-  res.status(201).json(newRental);
+  const rentalData = req.body;
+
+  db.Rental.create(rentalData, (err, newRental) => {
+    if (err) {
+      return res.status(422).json({
+        errors: [
+          {
+            title: 'Rental Error!',
+            message:
+              'An error occurred while creating the new rental. Please try again.',
+          },
+        ],
+      });
+    }
+
+    res.status(201).json(newRental);
+  });
 };
 
 exports.updateRental = (req, res) => {
   const { id } = req.params;
-  const rental = rentals.find((r) => r._id === id);
-  rental.title = req.body.title;
-  rental.city = req.body.city;
-  rental.category = req.body.category;
-  rental.image = 'http://via.placeholder.com/350x250';
-  rental.numOfRooms = req.body.numOfRooms;
-  rental.shared = req.body.shared;
-  rental.description = req.body.description;
-  rental.dailyPrice = req.body.dailyPrice || 99;
-  res.json(rental);
+
+  // TODO: Finish update
+  return res.status(422).json({
+    errors: [
+      {
+        title: 'Server Error!',
+        message: 'This rental update endpoint has not been completed.',
+      },
+    ],
+  });
 };
 
 exports.deleteRental = (req, res) => {
   const { id } = req.params;
-  const index = rentals.indexOf((r) => r._id === id);
-  rentals.splice(index, 1);
-  res.sendStatus(200);
+
+  // TODO: Finish delete
+  return res.status(422).json({
+    errors: [
+      {
+        title: 'Server Error!',
+        message: 'This rental delete endpoint has not been completed.',
+      },
+    ],
+  });
 };
