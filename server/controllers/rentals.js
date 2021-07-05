@@ -15,6 +15,7 @@ exports.getRentals = async (req, res) => {
 exports.getRentalById = async (req, res) => {
   try {
     const rental = await Rental.findById(req.params.id);
+    if (!rental) throw new Error();
     res.json(rental);
   } catch (err) {
     Rental.sendError(res, {
