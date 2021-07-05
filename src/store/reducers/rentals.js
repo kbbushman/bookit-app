@@ -1,10 +1,10 @@
-import { FETCH_RENTALS, CREATE_RENTAL } from 'actions';
+import * as actionTypes from 'actions/actionTypes';
 
 export function rentals(state = [], action) {
   switch (action.type) {
-    case FETCH_RENTALS:
+    case actionTypes.FETCH_RENTALS:
       return action.rentals;
-    case CREATE_RENTAL:
+    case actionTypes.CREATE_RENTAL:
       return [...state, action.rental];
     default:
       return state;
