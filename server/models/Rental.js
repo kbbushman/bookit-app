@@ -15,6 +15,7 @@ const rentalSchema = new mongoose.Schema(
     street: {
       type: String,
       required: true,
+      lowercase: true,
       minlength: [4, 'Invalid street. Minimum length is 4 characters'],
     },
     category: {
