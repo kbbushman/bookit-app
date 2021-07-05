@@ -8,11 +8,19 @@ import { capitalize } from 'utils/helpers';
 function RentalDetailPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const rental = useSelector((state) => state.rental.data);
+  const {
+    data: rental,
+    isLoading,
+    errors,
+  } = useSelector((state) => state.rental);
 
   useEffect(() => {
     dispatch(fetchOneRental(id));
   }, [id, dispatch]);
+
+  if (isLoading) return <h2>Loading...</h2>;
+
+  if (errors) return <h2>{errors[0].message}</h2>;
 
   return (
     <section id="rentalDetails">
