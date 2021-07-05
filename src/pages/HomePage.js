@@ -5,7 +5,7 @@ import { fetchRentals } from 'actions';
 
 function HomePage() {
   const dispatch = useDispatch();
-  const rentals = useSelector((state) => state.rentals);
+  const rentals = useSelector((state) => state.rentals.data);
 
   useEffect(() => {
     dispatch(fetchRentals());

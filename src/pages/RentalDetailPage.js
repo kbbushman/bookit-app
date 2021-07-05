@@ -8,7 +8,7 @@ import { capitalize } from 'utils/helpers';
 function RentalDetailPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const rental = useSelector((state) => state.rental);
+  const rental = useSelector((state) => state.rental.data);
 
   useEffect(() => {
     dispatch(fetchOneRental(id));
