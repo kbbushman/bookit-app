@@ -1,4 +1,4 @@
-import LoginForm from '../components/forms/LoginForm';
+import LoginForm from 'components/forms/LoginForm';
 import loginImage from 'images/login-image.jpg';
 
 function LoginPage() {

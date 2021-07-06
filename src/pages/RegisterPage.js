@@ -1,5 +1,5 @@
 import registerImage from 'images/register-image.jpg';
-import RegisterForm from '../components/forms/RegisterForm';
+import RegisterForm from 'components/forms/RegisterForm';
 
 function RegisterPage() {
   const handleSubmit = (formData) => {
