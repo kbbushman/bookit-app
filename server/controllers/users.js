@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 const { User } = require('../models');
 
 exports.login = async (req, res) => {
@@ -30,7 +32,11 @@ exports.login = async (req, res) => {
       });
     }
 
-    res.json({ message: 'Login success' });
+    const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
+      expiresIn: config.JWT_EXPIRES_IN,
+    });
+
+    res.json({ token });
   } catch (err) {
     User.sendError(res, {
       status: 500,
