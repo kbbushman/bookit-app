@@ -38,11 +38,7 @@ exports.login = async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    User.sendError(res, {
-      status: 500,
-      title: 'Login Error',
-      message: 'Something went wrong, please try again',
-    });
+    res.sendMongoError(err);
   }
 };
 
@@ -80,11 +76,7 @@ exports.register = async (req, res) => {
 
     res.status(201).json({ message: 'Registration success' });
   } catch (err) {
-    User.sendError(res, {
-      status: 500,
-      title: 'Registration Error',
-      message: 'Something went wrong, please try again',
-    });
+    res.sendMongoError(err);
   }
 };
 
@@ -94,32 +86,20 @@ exports.verifyAuth = (req, res) => {
 
 exports.authRequired = async (req, res, next) => {
   const token = req.headers.authorization;
-
-  if (!token) {
-    return notAuthorized(res);
-  }
+  if (!token) return notAuthorized(res);
 
   const { decodedToken, tokenError } = parseToken(token);
-
-  if (tokenError) {
-    return notAuthorized(res);
-  }
+  if (tokenError) return notAuthorized(res);
 
   try {
     const user = await User.findById(decodedToken.id);
-
-    if (!user) {
-      return notAuthorized(res);
-    }
+    if (!user) return notAuthorized(res);
 
     res.locals.user = user;
+
     next();
   } catch (err) {
-    User.sendError(res, {
-      status: 500,
-      title: 'Registration Error',
-      message: 'Something went wrong, please try again',
-    });
+    res.sendMongoError(err);
   }
 };
 

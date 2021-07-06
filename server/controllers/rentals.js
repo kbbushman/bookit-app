@@ -5,10 +5,7 @@ exports.getRentals = async (req, res) => {
     const rentals = await Rental.find({});
     res.json(rentals);
   } catch (err) {
-    Rental.sendError(res, {
-      status: 422,
-      message: 'An error occurred while retrieving rentals.',
-    });
+    res.sendMongoError(err);
   }
 };
 
@@ -18,10 +15,7 @@ exports.getRentalById = async (req, res) => {
     if (!rental) throw new Error();
     res.json(rental);
   } catch (err) {
-    Rental.sendError(res, {
-      status: 422,
-      message: 'An error occurred while retrieving the requested rental.',
-    });
+    res.sendMongoError(err);
   }
 };
 
@@ -30,10 +24,7 @@ exports.createRental = async (req, res) => {
     const newRental = await Rental.create(req.body);
     res.status(201).json(newRental);
   } catch (err) {
-    Rental.sendError(res, {
-      status: 422,
-      message: 'An error occurred while creating the new rental.',
-    });
+    res.sendMongoError(err);
   }
 };
 
