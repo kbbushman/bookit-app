@@ -76,7 +76,7 @@ exports.register = async (req, res) => {
       });
     }
 
-    const newUser = await User.create({ username, email, password });
+    await User.create({ username, email, password });
 
     res.status(201).json({ message: 'Registration success' });
   } catch (err) {
@@ -87,3 +87,59 @@ exports.register = async (req, res) => {
     });
   }
 };
+
+exports.verifyAuth = (req, res) => {
+  res.json({ message: 'Auth Verified.', userId: res.locals.user._id });
+};
+
+exports.authRequired = async (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return notAuthorized(res);
+  }
+
+  const { decodedToken, tokenError } = parseToken(token);
+
+  if (tokenError) {
+    return notAuthorized(res);
+  }
+
+  try {
+    const user = await User.findById(decodedToken.id);
+
+    if (!user) {
+      return notAuthorized(res);
+    }
+
+    res.locals.user = user;
+    next();
+  } catch (err) {
+    User.sendError(res, {
+      status: 500,
+      title: 'Registration Error',
+      message: 'Something went wrong, please try again',
+    });
+  }
+};
+
+function parseToken(token) {
+  try {
+    const decodedToken = jwt.verify(token.split(' ')[1], config.JWT_SECRET);
+    return { decodedToken };
+  } catch (err) {
+    return { tokenError: 'Token could not be parsed' };
+  }
+}
+
+function notAuthorized(res) {
+  return res.status(401).json({
+    errors: [
+      {
+        title: 'Not Authorized',
+        message:
+          'You do not have permission to access this resource. Please login and try again',
+      },
+    ],
+  });
+}
