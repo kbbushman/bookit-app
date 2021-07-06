@@ -29,10 +29,10 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.statics.sendError = function (res, config) {
-  const { status, message } = config;
+  const { status, title, message } = config;
 
   return res.status(status).json({
-    errors: [{ title: 'User Error!', message }],
+    errors: [{ title, message }],
   });
 };
 
