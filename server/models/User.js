@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -26,6 +27,26 @@ const userSchema = new mongoose.Schema({
     minlength: [6, 'Password must be at least 6 characters'],
     maxlength: [32, 'Password max length is 32 characters'],
   },
+});
+
+userSchema.pre('save', async function (next) {
+  const user = this;
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(user.password, salt);
+    user.password = hash;
+    next();
+  } catch (err) {
+    res.status(500).json({
+      errors: [
+        {
+          title: 'Registration Error',
+          message: 'Something went wrong, please try again',
+        },
+      ],
+    });
+  }
 });
 
 userSchema.statics.sendError = function (res, config) {
