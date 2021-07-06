@@ -1,6 +1,11 @@
+import LoginForm from '../components/forms/LoginForm';
 import loginImage from 'images/login-image.jpg';
 
 function LoginPage() {
+  const handleSubmit = (formData) => {
+    console.log(formData);
+  };
+
   return (
     <div className="bi-form">
       <div className="row">
@@ -9,27 +14,7 @@ function LoginPage() {
           {/* <!-- <div className="alert alert-success">
             Some message
           </div> --> */}
-          <form>
-            <div className="form-group mb-3">
-              <label htmlFor="email">Email</label>
-              <input type="email" className="form-control" id="email" />
-              {/* <div className="alert alert-danger">
-                <div>
-                  Email is required.
-                </div>
-                <div>
-                  Must be valid email format!
-                </div>
-              </div> */}
-            </div>
-            <div className="form-group mb-3">
-              <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" id="password" />
-            </div>
-            <button type="submit" className="btn btn-bi-main">
-              Submit
-            </button>
-          </form>
+          <LoginForm onSubmit={handleSubmit} />
           {/* <div className="alert alert-danger">
             <p>
               Some Error
