@@ -11,15 +11,7 @@ function LoginPage() {
       <div className="row">
         <div className="col-md-5">
           <h1 className="page-title">Login</h1>
-          {/* <!-- <div className="alert alert-success">
-            Some message
-          </div> --> */}
           <LoginForm onSubmit={handleSubmit} />
-          {/* <div className="alert alert-danger">
-            <p>
-              Some Error
-            </p>
-          </div> --> */}
         </div>
         <div className="col-md-6 ml-auto">
           <div className="image-container">
