@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { passwordsMatch } from 'utils/validators';
 
 const EMAIL_PATTERN =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -7,6 +8,7 @@ function RegisterForm({ onSubmit }) {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -68,6 +70,7 @@ function RegisterForm({ onSubmit }) {
           {...register('passwordConfirmation', {
             required: true,
             minLength: 6,
+            validate: { passwordsMatch: passwordsMatch('password', getValues) },
           })}
         />
         {errors.passwordConfirmation && (
@@ -76,6 +79,8 @@ function RegisterForm({ onSubmit }) {
               'Password confirmation is required'}
             {errors.passwordConfirmation.type === 'minLength' &&
               'Password confirmation must be at least 6 characters'}
+            {errors.passwordConfirmation.type === 'passwordsMatch' &&
+              'Passwords do not match'}
           </div>
         )}
       </div>
