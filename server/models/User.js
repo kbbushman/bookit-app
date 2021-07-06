@@ -49,6 +49,21 @@ userSchema.pre('save', async function (next) {
   }
 });
 
+userSchema.methods.hasSamePassword = function (providedPassword) {
+  try {
+    return bcrypt.compareSync(providedPassword, this.password);
+  } catch (err) {
+    res.status(500).json({
+      errors: [
+        {
+          title: 'Registration Error',
+          message: 'Something went wrong, please try again',
+        },
+      ],
+    });
+  }
+};
+
 userSchema.statics.sendError = function (res, config) {
   const { status, title, message } = config;
 
