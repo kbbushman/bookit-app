@@ -4,44 +4,44 @@ const rentalSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: 'Title is required',
       maxlength: [128, 'Invalid title. Maximum length is 128 characters'],
     },
     city: {
       type: String,
-      required: true,
+      required: 'City is required',
       lowercase: true,
     },
     street: {
       type: String,
-      required: true,
+      required: 'Street is required',
       lowercase: true,
       minlength: [4, 'Invalid street. Minimum length is 4 characters'],
     },
     category: {
       type: String,
-      required: true,
+      required: 'Category is required',
       lowercase: true,
     },
     image: {
       type: String,
-      required: true,
+      required: 'Image is required',
     },
     description: {
       type: String,
-      required: true,
+      required: 'Description is required',
     },
     dailyPrice: {
       type: Number,
-      required: true,
+      required: 'Daily price is required',
     },
     numOfRooms: {
       type: Number,
-      required: true,
+      required: 'Number of rooms is required',
     },
     shared: {
       type: Boolean,
-      required: true,
+      required: 'Shared is required',
     },
   },
   { timestamps: true }
