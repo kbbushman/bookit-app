@@ -1,49 +1,17 @@
 import registerImage from 'images/register-image.jpg';
+import RegisterForm from '../components/forms/RegisterForm';
 
 function RegisterPage() {
+  const handleSubmit = (formData) => {
+    console.log(formData);
+  };
+
   return (
     <div className="bi-form">
       <div className="row">
         <div className="col-md-5">
           <h1 className="page-title">Register</h1>
-          <form>
-            <div className="form-group mb-3">
-              <label htmlFor="username">Username</label>
-              <input type="text" className="form-control" id="username" />
-              {/* <div className="alert alert-danger">
-                <div *ngIf="username.errors.required">
-                  Username is required.
-                </div>
-              </div> */}
-            </div>
-
-            <div className="form-group mb-3">
-              <label htmlFor="email">Email</label>
-              <input type="email" className="form-control" id="email" />
-            </div>
-
-            <div className="form-group mb-3">
-              <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" id="password" />
-            </div>
-
-            <div className="form-group mb-3">
-              <label htmlFor="passwordConfirmation">Confirm Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="passwordConfirmation"
-              />
-            </div>
-            <button type="submit" className="btn btn-bi-main">
-              Submit
-            </button>
-          </form>
-          {/* <div className="alert alert-danger">
-            <p>
-              Some Error
-            </p>
-          </div> */}
+          <RegisterForm onSubmit={handleSubmit} />
         </div>
         <div className="col-md-6 ml-auto">
           <div className="image-container">
