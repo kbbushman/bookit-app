@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import FormError from './FormError';
 import { EMAIL_PATTERN } from 'utils/helpers';
 
 function LoginForm({ onSubmit }) {
@@ -16,15 +18,20 @@ function LoginForm({ onSubmit }) {
           type="email"
           className="form-control"
           defaultValue=""
-          {...register('email', { required: true, pattern: EMAIL_PATTERN })}
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value: EMAIL_PATTERN,
+              message: 'Email must be a valid email address',
+            },
+          })}
         />
-        {errors.email && (
-          <div className="alert alert-danger mt-2">
-            {errors.email.type === 'required' && 'Email is required'}
-            {errors.email.type === 'pattern' &&
-              'Email must be a valid email address'}
-          </div>
-        )}
+        <ErrorMessage
+          name="email"
+          errors={errors}
+          as={<FormError />}
+          render={({ message }) => <span>{message}</span>}
+        />
       </div>
       <div className="form-group mb-3">
         <label htmlFor="password">Password</label>
@@ -32,15 +39,20 @@ function LoginForm({ onSubmit }) {
           type="password"
           className="form-control"
           defaultValue=""
-          {...register('password', { required: true, minLength: 6 })}
+          {...register('password', {
+            required: 'Password is required',
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters',
+            },
+          })}
         />
-        {errors.password && (
-          <div className="alert alert-danger mt-2">
-            {errors.password.type === 'required' && 'Password is required'}
-            {errors.password.type === 'minLength' &&
-              'Password must be at least 6 characters'}
-          </div>
-        )}
+        <ErrorMessage
+          name="password"
+          errors={errors}
+          as={<FormError />}
+          render={({ message }) => <span>{message}</span>}
+        />
       </div>
       <button type="submit" className="btn btn-bi-main">
         Submit

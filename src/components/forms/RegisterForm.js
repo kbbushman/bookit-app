@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import FormError from './FormError';
 import { EMAIL_PATTERN } from 'utils/helpers';
 import { passwordsMatch } from 'utils/validators';
 
@@ -17,15 +19,20 @@ function RegisterForm({ onSubmit }) {
         <input
           type="text"
           className="form-control"
-          {...register('username', { required: true, minLength: 2 })}
+          {...register('username', {
+            required: 'Username is required',
+            minLength: {
+              value: 2,
+              message: 'Username must be at least 2 characters',
+            },
+          })}
         />
-        {errors.username && (
-          <div className="alert alert-danger mt-2">
-            {errors.username.type === 'required' && 'Username is required'}
-            {errors.username.type === 'minLength' &&
-              'Username must be at least 2 characters'}
-          </div>
-        )}
+        <ErrorMessage
+          name="username"
+          errors={errors}
+          as={<FormError />}
+          render={({ message }) => <span>{message}</span>}
+        />
       </div>
 
       <div className="form-group mb-3">
@@ -33,15 +40,20 @@ function RegisterForm({ onSubmit }) {
         <input
           type="email"
           className="form-control"
-          {...register('email', { required: true, pattern: EMAIL_PATTERN })}
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value: EMAIL_PATTERN,
+              message: 'Email must be a valid email address',
+            },
+          })}
         />
-        {errors.email && (
-          <div className="alert alert-danger mt-2">
-            {errors.email.type === 'required' && 'Email is required'}
-            {errors.email.type === 'pattern' &&
-              'Email must be a valid email address'}
-          </div>
-        )}
+        <ErrorMessage
+          name="email"
+          errors={errors}
+          as={<FormError />}
+          render={({ message }) => <span>{message}</span>}
+        />
       </div>
 
       <div className="form-group mb-3">
@@ -49,38 +61,44 @@ function RegisterForm({ onSubmit }) {
         <input
           type="password"
           className="form-control"
-          {...register('password', { required: true, minLength: 6 })}
+          {...register('password', {
+            required: 'Password is required',
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters',
+            },
+          })}
         />
-        {errors.password && (
-          <div className="alert alert-danger mt-2">
-            {errors.password.type === 'required' && 'Password is required'}
-            {errors.password.type === 'minLength' &&
-              'Password must be at least 6 characters'}
-          </div>
-        )}
+        <ErrorMessage
+          name="password"
+          errors={errors}
+          as={<FormError />}
+          render={({ message }) => <span>{message}</span>}
+        />
       </div>
 
       <div className="form-group mb-3">
-        <label htmlFor="passwordConfirmation">Confirm Password</label>
+        <label htmlFor="passwordConfirm">Confirm Password</label>
         <input
           type="password"
           className="form-control"
-          {...register('passwordConfirmation', {
-            required: true,
-            minLength: 6,
-            validate: { passwordsMatch: passwordsMatch('password', getValues) },
+          {...register('passwordConfirm', {
+            required: 'Password confirmation is required',
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters',
+            },
+            validate: {
+              passwordsMatch: passwordsMatch('password', getValues),
+            },
           })}
         />
-        {errors.passwordConfirmation && (
-          <div className="alert alert-danger mt-2">
-            {errors.passwordConfirmation.type === 'required' &&
-              'Password confirmation is required'}
-            {errors.passwordConfirmation.type === 'minLength' &&
-              'Password confirmation must be at least 6 characters'}
-            {errors.passwordConfirmation.type === 'passwordsMatch' &&
-              'Passwords do not match'}
-          </div>
-        )}
+        <ErrorMessage
+          name="passwordConfirm"
+          errors={errors}
+          as={<FormError />}
+          render={({ message }) => <span>{message}</span>}
+        />
       </div>
       <button type="submit" className="btn btn-bi-main">
         Submit
