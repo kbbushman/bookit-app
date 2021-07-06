@@ -1,6 +1,44 @@
 const { User } = require('../models');
 
-exports.login = async (req, res) => {};
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return User.sendError(res, {
+      status: 422,
+      title: 'Login Error',
+      message: 'Email and password are required',
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      return User.sendError(res, {
+        status: 422,
+        title: 'Login Error',
+        message: 'Email or password is incorrect',
+      });
+    }
+
+    if (!user.hasSamePassword(password)) {
+      return User.sendError(res, {
+        status: 422,
+        title: 'Login Error',
+        message: 'Email or password is incorrect',
+      });
+    }
+
+    res.json({ message: 'Login success' });
+  } catch (err) {
+    User.sendError(res, {
+      status: 500,
+      title: 'Login Error',
+      message: 'Something went wrong, please try again',
+    });
+  }
+};
 
 exports.register = async (req, res) => {
   const { username, email, password, passwordConfirm } = req.body;
