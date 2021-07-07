@@ -6,8 +6,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return User.sendError(res, {
-      status: 422,
+    return res.sendApiError({
       title: 'Login Error',
       message: 'Email and password are required',
     });
@@ -17,16 +16,14 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
-      return User.sendError(res, {
-        status: 422,
+      return res.sendApiError({
         title: 'Login Error',
         message: 'Email or password is incorrect',
       });
     }
 
     if (!user.hasSamePassword(password)) {
-      return User.sendError(res, {
-        status: 422,
+      return res.sendApiError({
         title: 'Login Error',
         message: 'Email or password is incorrect',
       });
@@ -46,16 +43,14 @@ exports.register = async (req, res) => {
   const { username, email, password, passwordConfirm } = req.body;
 
   if (!username || !email || !password) {
-    return User.sendError(res, {
-      status: 422,
+    return res.sendApiError({
       title: 'Registration Error',
       message: 'Username, email, and password are required',
     });
   }
 
   if (password !== passwordConfirm) {
-    return User.sendError(res, {
-      status: 422,
+    return res.sendApiError({
       title: 'Registration Error',
       message: 'Passwords do not match',
     });
@@ -65,8 +60,7 @@ exports.register = async (req, res) => {
     const existingUser = await User.findOne({ email: email.toLowerCase() });
 
     if (existingUser) {
-      return User.sendError(res, {
-        status: 422,
+      return res.sendApiError({
         title: 'Registration Error',
         message: 'Email address has already been registered',
       });
@@ -94,7 +88,6 @@ exports.authRequired = async (req, res, next) => {
   try {
     const user = await User.findById(decodedToken.id);
     if (!user) return notAuthorized(res);
-
     res.locals.user = user;
 
     next();
@@ -113,13 +106,10 @@ function parseToken(token) {
 }
 
 function notAuthorized(res) {
-  return res.status(401).json({
-    errors: [
-      {
-        title: 'Not Authorized',
-        message:
-          'You do not have permission to access this resource. Please login and try again',
-      },
-    ],
+  return res.sendApiError({
+    status: 401,
+    title: 'Not Authorized',
+    message:
+      'You do not have permission to access this resource. Please login and try again',
   });
 }

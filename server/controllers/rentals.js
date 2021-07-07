@@ -12,7 +12,13 @@ exports.getRentals = async (req, res) => {
 exports.getRentalById = async (req, res) => {
   try {
     const rental = await Rental.findById(req.params.id);
-    if (!rental) throw new Error();
+    if (!rental) {
+      return res.sendApiError({
+        title: 'Find Rental Error',
+        message: `Rental with ID: ${req.params.id} does not exist`,
+      });
+    }
+
     res.json(rental);
   } catch (err) {
     res.sendMongoError(err);
@@ -30,7 +36,8 @@ exports.createRental = async (req, res) => {
 
 exports.updateRental = async (req, res) => {
   // TODO: Finish update
-  return Rental.sendError(res, {
+  return res.sendApiError({
+    title: 'Update Rental Error',
     status: 500,
     message: 'This rental update endpoint has not been completed.',
   });
@@ -38,7 +45,8 @@ exports.updateRental = async (req, res) => {
 
 exports.deleteRental = async (req, res) => {
   // TODO: Finish delete
-  return Rental.sendError(res, {
+  return res.sendApiError({
+    title: 'Delete Rental Error',
     status: 500,
     message: 'This rental delete endpoint has not been completed.',
   });
