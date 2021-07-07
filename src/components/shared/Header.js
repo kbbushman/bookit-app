@@ -1,7 +1,7 @@
 import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function Header() {
+function Header({ logOut }) {
   const { isAuth, username } = useSelector((state) => state.auth);
 
   return (
@@ -83,7 +83,9 @@ function Header() {
                   </ul>
                 </li>
                 <li className="nav-item">
-                  <div className="nav-link">Logout</div>
+                  <div className="nav-link" onClick={logOut}>
+                    Log Out
+                  </div>
                 </li>
               </>
             )}
@@ -91,7 +93,7 @@ function Header() {
               <>
                 <li className="nav-item">
                   <NavLink className="nav-link" aria-current="page" to="/login">
-                    Login
+                    Log In
                   </NavLink>
                 </li>
                 <li className="nav-item">
