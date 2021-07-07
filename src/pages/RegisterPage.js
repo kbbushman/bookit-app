@@ -18,7 +18,15 @@ function RegisterPage() {
     }
   };
 
-  if (shouldRedirect) return <Redirect to={{ pathname: '/login' }} />;
+  if (shouldRedirect)
+    return (
+      <Redirect
+        to={{
+          pathname: '/login',
+          state: { message: 'Registration Success! Please log in to continue' },
+        }}
+      />
+    );
 
   return (
     <div className="bi-form">
