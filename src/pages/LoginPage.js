@@ -11,7 +11,7 @@ function LoginPage({ auth }) {
 
   const handleSubmit = async (formData) => {
     try {
-      const token = await auth.logIn(formData);
+      await auth.logIn(formData);
       setShouldRedirect(true);
     } catch (err) {
       setErrors(err);
