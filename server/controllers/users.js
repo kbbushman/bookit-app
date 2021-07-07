@@ -29,9 +29,13 @@ exports.login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
-      expiresIn: config.JWT_EXPIRES_IN,
-    });
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      config.JWT_SECRET,
+      {
+        expiresIn: config.JWT_EXPIRES_IN,
+      }
+    );
 
     res.json({ token });
   } catch (err) {
