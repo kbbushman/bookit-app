@@ -3,15 +3,16 @@ import { Redirect } from 'react-router-dom';
 import LoginForm from 'components/forms/LoginForm';
 import ApiErrors from 'components/forms/ApiErrors';
 import loginImage from 'images/login-image.jpg';
-import { loginUser } from 'actions';
+import { withAuth } from 'providers/AuthProvider';
 
-function LoginPage() {
+function LoginPage({ auth }) {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errors, setErrors] = useState(null);
 
   const handleSubmit = async (formData) => {
     try {
-      await loginUser(formData);
+      const token = await auth.logIn(formData);
+      console.log(token);
       setShouldRedirect(true);
     } catch (err) {
       setErrors(err);
@@ -41,4 +42,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default withAuth(LoginPage);
