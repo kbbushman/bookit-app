@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import App from 'App';
+import { AuthProvider } from 'providers/AuthProvider';
 import { initStore } from 'store';
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -16,7 +17,9 @@ library.add(fas);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
