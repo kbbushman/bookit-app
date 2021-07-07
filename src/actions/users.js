@@ -12,5 +12,6 @@ export function registerUser(registerData) {
 export function loginUser(loginData) {
   return axios
     .post(BASE_URL + 'login', loginData)
+    .then((res) => res.data)
     .catch((err) => Promise.reject(extractApiErrors(err.response || {})));
 }
