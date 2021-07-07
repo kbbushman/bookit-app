@@ -1,10 +1,22 @@
+import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import RegisterForm from 'components/forms/RegisterForm';
 import registerImage from 'images/register-image.jpg';
+import { registerUser } from 'actions';
 
 function RegisterPage() {
-  const handleSubmit = (formData) => {
-    console.log(formData);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  const handleSubmit = async (formData) => {
+    try {
+      await registerUser(formData);
+      setShouldRedirect(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  if (shouldRedirect) return <Redirect to={{ pathname: '/login' }} />;
 
   return (
     <div className="bi-form">
