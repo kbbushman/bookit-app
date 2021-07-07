@@ -8,35 +8,51 @@ const AuthContext = createContext(null);
 
 export function AuthProvider(props) {
   const dispatch = useDispatch();
+  const TOKEN_ITEM = 'bi_token';
+
+  function getToken() {
+    return localStorage.getItem(TOKEN_ITEM);
+  }
 
   function decodeToken(token) {
     return jwt.decode(token);
   }
 
+  function tokenNotExpired(exp) {
+    return Date.now() < exp * 1000;
+  }
+
+  function isValidToken(token) {
+    const decodedToken = decodeToken(token);
+    return decodedToken && tokenNotExpired(decodedToken.exp);
+  }
+
+  function isAuthenticated() {
+    const token = getToken();
+    return token && isValidToken(token);
+  }
+
   function checkAuthState() {
-    const token = localStorage.getItem('bi_token');
-    if (token) {
-      const { username, exp } = decodeToken(token);
-      if (Date.now() < exp * 1000) {
-        dispatch({ type: USER_AUTHENTICATED, username });
-      }
+    if (isAuthenticated()) {
+      const { username } = decodeToken(getToken());
+      dispatch({ type: USER_AUTHENTICATED, username });
     }
   }
 
   async function logIn(formData) {
     const { token } = await loginUser(formData);
-    localStorage.setItem('bi_token', token);
+    localStorage.setItem(TOKEN_ITEM, token);
     const { username } = decodeToken(token);
     dispatch({ type: USER_AUTHENTICATED, username });
     return token;
   }
 
   function logOut() {
-    localStorage.removeItem('bi_token');
+    localStorage.removeItem(TOKEN_ITEM);
     dispatch({ type: USER_LOGGED_OUT });
   }
 
-  const authApi = { logIn, checkAuthState, logOut };
+  const authApi = { logIn, logOut, checkAuthState, isAuthenticated };
 
   return (
     <AuthContext.Provider value={authApi}>
