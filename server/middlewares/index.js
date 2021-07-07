@@ -1,4 +1,12 @@
-exports.errorHandler = (req, res, next) => {
+exports.provideErrorHandlers = (req, res, next) => {
+  res.sendApiError = function (config) {
+    const { status = 422, title, message } = config;
+
+    return res.status(status).json({
+      errors: [{ title, message }],
+    });
+  };
+
   res.sendMongoError = (dbError) => {
     const normalizedErrors = [];
     const errorField = 'errors';
