@@ -13,7 +13,7 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      <Header logOut={authService.logOut} />
       <main className="container bi-container">
         <Routes />
       </main>
