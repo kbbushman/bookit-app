@@ -3,16 +3,18 @@ import { Redirect } from 'react-router-dom';
 import RegisterForm from 'components/forms/RegisterForm';
 import registerImage from 'images/register-image.jpg';
 import { registerUser } from 'actions';
+import ApiErrors from '../components/forms/ApiErrors';
 
 function RegisterPage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [errors, setErrors] = useState(null);
 
   const handleSubmit = async (formData) => {
     try {
       await registerUser(formData);
       setShouldRedirect(true);
     } catch (err) {
-      console.log(err);
+      setErrors(err);
     }
   };
 
@@ -24,6 +26,7 @@ function RegisterPage() {
         <div className="col-md-5">
           <h1 className="page-title">Register</h1>
           <RegisterForm onSubmit={handleSubmit} />
+          {errors && <ApiErrors errors={errors} />}
         </div>
         <div className="col-md-6 ml-auto">
           <div className="image-container">
