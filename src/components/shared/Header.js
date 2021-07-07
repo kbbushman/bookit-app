@@ -1,6 +1,9 @@
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Header() {
+  const { isAuth, username } = useSelector((state) => state.auth);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -32,53 +35,76 @@ function Header() {
           </form>
 
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            {isAuth && (
+              <li className="nav-item">
+                <div className="nav-link">Welcome {username}</div>
+              </li>
+            )}
             <li className="nav-item">
               <NavLink className="nav-link" aria-current="page" exact to="/">
                 Home
               </NavLink>
             </li>
-            <li className="nav-item dropdown">
-              <NavLink
-                className="nav-link dropdown-toggle"
-                to="/manage"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Manage
-              </NavLink>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <Link className="dropdown-item" to="#">
-                    Action
-                  </Link>
+            {isAuth && (
+              <>
+                <li className="nav-item dropdown">
+                  <NavLink
+                    className="nav-link dropdown-toggle"
+                    to="/manage"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Manage
+                  </NavLink>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <Link className="dropdown-item" to="#">
+                        Action
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="#">
+                        Another action
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="#">
+                        Something else here
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
-                <li>
-                  <Link className="dropdown-item" to="#">
-                    Another action
-                  </Link>
+                <li className="nav-item">
+                  <div className="nav-link">Logout</div>
                 </li>
-                <li>
-                  <hr className="dropdown-divider" />
+              </>
+            )}
+            {!isAuth && (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" aria-current="page" to="/login">
+                    Login
+                  </NavLink>
                 </li>
-                <li>
-                  <Link className="dropdown-item" to="#">
-                    Something else here
-                  </Link>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    aria-current="page"
+                    to="/register"
+                  >
+                    Register
+                  </NavLink>
                 </li>
-              </ul>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page" to="/login">
-                Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page" to="/register">
-                Register
-              </NavLink>
-            </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
