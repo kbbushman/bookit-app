@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt from 'jsonwebtoken';
 import { loginUser } from 'actions';
@@ -13,22 +13,35 @@ export function AuthProvider(props) {
     return jwt.decode(token);
   }
 
+  function checkAuthState() {
+    const token = localStorage.getItem('bi_token');
+    if (token) {
+      const { username, exp } = decodeToken(token);
+      if (Date.now() < exp * 1000) {
+        dispatch({ type: USER_AUTHENTICATED, username });
+      }
+    }
+  }
+
   const logIn = async (formData) => {
     const { token } = await loginUser(formData);
     localStorage.setItem('bi_token', token);
-    const decodedToken = decodeToken(token);
-    console.log(decodedToken);
-    dispatch({ type: USER_AUTHENTICATED, username: decodedToken.username });
+    const { username } = decodeToken(token);
+    dispatch({ type: USER_AUTHENTICATED, username });
     return token;
   };
 
-  const authApi = { logIn };
+  const authApi = { logIn, checkAuthState };
 
   return (
     <AuthContext.Provider value={authApi}>
       {props.children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
 }
 
 export function withAuth(Component) {
