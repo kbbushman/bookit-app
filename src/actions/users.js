@@ -3,8 +3,14 @@ import { extractApiErrors } from 'utils/helpers';
 
 const BASE_URL = '/api/v1/users/';
 
-export function registerUser(userData) {
+export function registerUser(registerData) {
   return axios
-    .post(BASE_URL + 'register', userData)
+    .post(BASE_URL + 'register', registerData)
+    .catch((err) => Promise.reject(extractApiErrors(err.response || {})));
+}
+
+export function loginUser(loginData) {
+  return axios
+    .post(BASE_URL + 'login', loginData)
     .catch((err) => Promise.reject(extractApiErrors(err.response || {})));
 }
