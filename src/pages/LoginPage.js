@@ -5,7 +5,7 @@ import ApiErrors from 'components/forms/ApiErrors';
 import loginImage from 'images/login-image.jpg';
 import { withAuth } from 'providers/AuthProvider';
 
-function LoginPage({ auth }) {
+function LoginPage({ auth, location: { state } }) {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errors, setErrors] = useState(null);
 
@@ -25,6 +25,9 @@ function LoginPage({ auth }) {
       <div className="row">
         <div className="col-md-5">
           <h1 className="page-title">Login</h1>
+          {state?.message && (
+            <div className="alert alert-success">{state.message}</div>
+          )}
           <LoginForm onSubmit={handleSubmit} />
           {errors && <ApiErrors errors={errors} />}
         </div>
