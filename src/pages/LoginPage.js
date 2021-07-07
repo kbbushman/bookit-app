@@ -5,10 +5,11 @@ import ApiErrors from 'components/forms/ApiErrors';
 import loginImage from 'images/login-image.jpg';
 import { useAuth } from 'providers/AuthProvider';
 
-function LoginPage({ auth, location: { state } }) {
+function LoginPage({ location: { state } }) {
   const authService = useAuth();
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errors, setErrors] = useState(null);
+  const message = state?.message;
 
   const handleSubmit = async (formData) => {
     try {
@@ -26,9 +27,7 @@ function LoginPage({ auth, location: { state } }) {
       <div className="row">
         <div className="col-md-5">
           <h1 className="page-title">Login</h1>
-          {state?.message && (
-            <div className="alert alert-success">{state.message}</div>
-          )}
+          {message && <div className="alert alert-success">{message}</div>}
           <LoginForm onSubmit={handleSubmit} />
           {errors && <ApiErrors errors={errors} />}
         </div>
