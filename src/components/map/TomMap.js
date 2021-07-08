@@ -4,17 +4,17 @@ import './TomMap.scss';
 
 function TomMap({ location }) {
   let map = useRef(null);
-  const { initMap, requestGeoLocation, setCenter } = useMap();
+  const { initMap, requestGeoLocation, setCenter, addMarker } = useMap();
 
   const getGeoLocation = useCallback(
     async (location) => {
       if (location) {
         const position = await requestGeoLocation(location);
-        console.log(position);
         setCenter(map.current, position);
+        addMarker(map.current, position);
       }
     },
-    [requestGeoLocation, map, setCenter]
+    [requestGeoLocation, map, setCenter, addMarker]
   );
 
   useEffect(() => {

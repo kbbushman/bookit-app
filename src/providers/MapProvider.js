@@ -9,7 +9,9 @@ export function MapProvider({ children, apiKey }) {
     const map = tt.map({
       key: apiKey,
       container: 'bi-map',
-      zoom: 15,
+      styel: 'tomtom://vector/1/basic-main',
+      zoom: 14,
+      scrollZoom: false,
     });
     map.addControl(new tt.NavigationControl());
     return map;
@@ -31,7 +33,18 @@ export function MapProvider({ children, apiKey }) {
     map.setCenter(new tt.LngLat(position.lon, position.lat));
   }
 
-  const mapApi = { initMap, requestGeoLocation, setCenter };
+  function addMarker(map, position) {
+    const markerDiv = document.createElement('div');
+    markerDiv.className = 'bi-marker';
+
+    new tt.Marker({
+      element: markerDiv,
+    })
+      .setLngLat([position.lon, position.lat])
+      .addTo(map);
+  }
+
+  const mapApi = { initMap, requestGeoLocation, setCenter, addMarker };
 
   return <MapContext.Provider value={mapApi}>{children}</MapContext.Provider>;
 }
