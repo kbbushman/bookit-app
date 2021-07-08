@@ -27,7 +27,9 @@ exports.getRentalById = async (req, res) => {
 
 exports.createRental = async (req, res) => {
   try {
-    const newRental = await Rental.create(req.body);
+    const rentalData = req.body;
+    rentalData.owner = res.locals.user._id;
+    const newRental = await Rental.create(rentalData);
     res.status(201).json(newRental);
   } catch (err) {
     res.sendMongoError(err);
