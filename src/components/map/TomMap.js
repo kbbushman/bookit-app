@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
-import tt from '@tomtom-international/web-sdk-maps';
+import { useMap } from 'providers/MapProvider';
 import './TomMap.scss';
 
 function TomMap() {
+  const { initMap } = useMap();
+
   useEffect(() => {
-    const map = tt.map({
-      key: 'N6OcrIpWfFwnTLIPEksAN31KNeoQ3pda',
-      container: 'bi-map',
-    });
-    map.addControl(new tt.NavigationControl());
-  }, []);
+    initMap();
+  }, [initMap]);
 
   return <div id="bi-map"></div>;
 }
