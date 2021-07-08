@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import App from 'App';
 import { AuthProvider } from 'providers/AuthProvider';
+import { MapProvider } from 'providers/MapProvider';
 import { initStore } from 'store';
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -18,7 +19,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <AuthProvider>
-        <App />
+        <MapProvider apiKey="N6OcrIpWfFwnTLIPEksAN31KNeoQ3pda">
+          <App />
+        </MapProvider>
       </AuthProvider>
     </Provider>
   </React.StrictMode>,
