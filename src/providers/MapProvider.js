@@ -18,15 +18,19 @@ export function MapProvider({ children, apiKey }) {
   }
 
   async function requestGeoLocation(location) {
-    const response = await axios.get(
-      `https://api.tomtom.com/search/2/geocode/${location}.JSON?key=${apiKey}`
-    );
-    if (response.data.results.length > 0) {
-      const { position } = response.data.results[0];
-      return position;
-    }
+    try {
+      const response = await axios.get(
+        `https://api.tomtom.com/search/2/geocode/${location}.JSON?key=${apiKey}`
+      );
 
-    return Promise.reject('Location not found');
+      if (response.data.results.length > 0) {
+        const { position } = response.data.results[0];
+        return position;
+      }
+      return Promise.reject('Location not found');
+    } catch (err) {
+      return Promise.reject('Location not found');
+    }
   }
 
   function setCenter(map, position) {
@@ -44,7 +48,24 @@ export function MapProvider({ children, apiKey }) {
       .addTo(map);
   }
 
-  const mapApi = { initMap, requestGeoLocation, setCenter, addMarker };
+  function addPopupMessage(map, message) {
+    new tt.Popup({
+      className: 'bi-popup',
+      closeButton: false,
+      closeOnClick: false,
+    })
+      .setLngLat(new tt.LngLat(0, 0))
+      .setHTML(`<p>${message}</p>`)
+      .addTo(map);
+  }
+
+  const mapApi = {
+    initMap,
+    requestGeoLocation,
+    setCenter,
+    addMarker,
+    addPopupMessage,
+  };
 
   return <MapContext.Provider value={mapApi}>{children}</MapContext.Provider>;
 }
