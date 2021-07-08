@@ -48,7 +48,7 @@ function Header({ logOut }) {
             {isAuth && (
               <>
                 <li className="nav-item dropdown">
-                  <NavLink
+                  <span
                     className="nav-link dropdown-toggle"
                     to="/manage"
                     id="navbarDropdown"
@@ -57,28 +57,15 @@ function Header({ logOut }) {
                     aria-expanded="false"
                   >
                     Manage
-                  </NavLink>
+                  </span>
                   <ul
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
                   >
                     <li>
-                      <Link className="dropdown-item" to="#">
-                        Action
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="#">
-                        Another action
-                      </Link>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="#">
-                        Something else here
-                      </Link>
+                      <NavLink className="dropdown-item" to="/rentals/new">
+                        New Rental
+                      </NavLink>
                     </li>
                   </ul>
                 </li>
