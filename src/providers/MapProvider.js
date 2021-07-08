@@ -1,10 +1,12 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useRef } from 'react';
 import axios from 'axios';
 import tt from '@tomtom-international/web-sdk-maps';
 
 const MapContext = createContext(null);
 
 export function MapProvider({ children, apiKey }) {
+  const cache = useRef({});
+
   function initMap() {
     const map = tt.map({
       key: apiKey,
@@ -17,17 +19,42 @@ export function MapProvider({ children, apiKey }) {
     return map;
   }
 
+  function normalizeLocation(location) {
+    return location.replace(/\s/g, '').toLowerCase();
+  }
+
+  function addLocationToCache(location, position) {
+    const locationKey = normalizeLocation(location);
+    return (cache.current[locationKey] = position);
+  }
+
+  function getCachedLocation(location) {
+    const locationKey = normalizeLocation(location);
+    console.log(cache.current[locationKey]);
+    return cache.current[locationKey];
+  }
+
+  function getGeoLocationData(location) {
+    const cachedData = getCachedLocation(location);
+    return cachedData
+      ? Promise.resolve(cachedData)
+      : requestGeoLocation(location);
+  }
+
   async function requestGeoLocation(location) {
+    console.log('GEOCODE API CALL');
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         `https://api.tomtom.com/search/2/geocode/${location}.JSON?key=${apiKey}`
       );
 
-      if (response.data.results.length > 0) {
-        const { position } = response.data.results[0];
-        return position;
+      if (!data.results.length) {
+        return Promise.reject('Location not found');
       }
-      return Promise.reject('Location not found');
+
+      const { position } = data.results[0];
+      addLocationToCache(location, position);
+      return position;
     } catch (err) {
       return Promise.reject('Location not found');
     }
@@ -61,7 +88,7 @@ export function MapProvider({ children, apiKey }) {
 
   const mapApi = {
     initMap,
-    requestGeoLocation,
+    getGeoLocationData,
     setCenter,
     addMarker,
     addPopupMessage,

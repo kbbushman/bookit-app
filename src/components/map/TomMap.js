@@ -4,22 +4,23 @@ import './TomMap.scss';
 
 function TomMap({ location }) {
   let map = useRef(null);
-  const { initMap, requestGeoLocation, setCenter, addMarker, addPopupMessage } =
+  const { initMap, getGeoLocationData, setCenter, addMarker, addPopupMessage } =
     useMap();
 
   const getGeoLocation = useCallback(
     async (location) => {
       if (location) {
         try {
-          const position = await requestGeoLocation(location);
+          const position = await getGeoLocationData(location);
           setCenter(map.current, position);
           addMarker(map.current, position);
         } catch (err) {
+          console.log(err);
           addPopupMessage(map.current, err);
         }
       }
     },
-    [requestGeoLocation, map, setCenter, addMarker, addPopupMessage]
+    [getGeoLocationData, map, setCenter, addMarker, addPopupMessage]
   );
 
   useEffect(() => {
