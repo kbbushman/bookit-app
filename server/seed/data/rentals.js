@@ -2,7 +2,7 @@ module.exports = [
   {
     title: 'Nice view on ocean',
     city: 'San Francisco',
-    street: 'Main street',
+    street: '2nd St',
     category: 'condo',
     image:
       'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
