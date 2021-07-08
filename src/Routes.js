@@ -5,14 +5,7 @@ import RegisterPage from 'pages/RegisterPage';
 import RentalDetailPage from 'pages/RentalDetailPage';
 import AuthRoute from 'components/auth/AuthRoute';
 import GuestRoute from 'components/auth/GuestRoute';
-
-function ProtectedPage() {
-  return (
-    <div>
-      <h1>Protected Page</h1>
-    </div>
-  );
-}
+import RentalNewPage from 'pages/RentalNewPage';
 
 function Routes() {
   return (
@@ -20,8 +13,8 @@ function Routes() {
       <Route exact path="/" component={HomePage} />
       <GuestRoute path="/login" component={LoginPage} />
       <GuestRoute path="/register" component={RegisterPage} />
+      <AuthRoute path="/rentals/new" component={RentalNewPage} />
       <Route path="/rentals/:id" component={RentalDetailPage} />
-      <AuthRoute path="/protected" component={ProtectedPage} />
     </Switch>
   );
 }
