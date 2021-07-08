@@ -43,6 +43,10 @@ const rentalSchema = new mongoose.Schema(
       type: Boolean,
       required: 'Shared is required',
     },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   { timestamps: true }
 );
