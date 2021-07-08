@@ -36,7 +36,7 @@ async function addDocuments(collectionName, Model, data) {
     process.exit(1);
   }
 
-  console.log(cyan, '\nDone!');
+  console.log(cyan, 'Done!');
   console.log(cyan, '\n========================================');
   process.exit(0);
 })();
