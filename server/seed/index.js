@@ -1,37 +1,42 @@
-const db = require('../models');
-const rentalData = require('./data/rentals');
+const { Rental, User } = require('../models');
+const { userData, rentalData } = require('./data');
 
-// ANSI color codes for console logs
+// ANSI color codes
 const cyan = '\u001b[36m';
 const yellow = '\x1b[33m%s\x1b[0m';
 const green = '\x1b[32m';
+const red = '\u001b[31m';
 
-(async function seedRentals() {
-  // START
+async function deleteDocuments(collectionName, Model) {
+  const count = await Model.estimatedDocumentCount();
+  console.log(yellow, `Deleting ${count} ${collectionName}...`);
+  const { deletedCount } = await Model.deleteMany();
+  console.log(green, `Success! ${deletedCount} ${collectionName} deleted\n`);
+}
+
+async function addDocuments(collectionName, Model, data) {
+  console.log(yellow, `Adding ${data.length} new ${collectionName}...`);
+  const result = await Model.create(data);
+  console.log(green, `Success! ${result.length} new ${collectionName} added\n`);
+}
+
+(async function seedDatabase() {
   console.log(cyan, '\n========================================');
   console.log(cyan, '\nBookIt Database Reset Utility\n');
 
   try {
-    // COUNT RENTALS
-    const count = await db.Rental.estimatedDocumentCount();
-    console.log(yellow, `\nDeleting ${count} rentals...`);
+    await deleteDocuments('users', User);
+    await deleteDocuments('rentals', Rental);
 
-    // DELETE RENTALS
-    const { deletedCount } = await db.Rental.deleteMany();
-    console.log(green, `Successfully deleted ${deletedCount} rentals.\n`);
-
-    // ADD RENTALS
-    console.log(yellow, `Adding ${rentalData.length} new rentals...`);
-    const newRentals = await db.Rental.create(rentalData);
-    console.log(green, `Successfully added ${newRentals.length} new rentals.`);
+    await addDocuments('users', User, userData);
+    await addDocuments('rentals', Rental, rentalData);
   } catch (err) {
-    console.log('\u001b[31m', 'BookIt Databse Reset Error!');
+    console.log(red, 'BookIt Databse Reset Error!');
     console.log(err);
     process.exit(1);
   }
 
-  // EXIT
   console.log(cyan, '\nDone!');
-  console.log('\u001b[36m', '\n========================================');
+  console.log(cyan, '\n========================================');
   process.exit(0);
 })();
