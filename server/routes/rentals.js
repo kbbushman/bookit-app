@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { authRequired } = require('../middlewares');
 const {
   getRentals,
   getRentalById,
@@ -9,7 +10,7 @@ const {
 
 router.get('/', getRentals);
 router.get('/:id', getRentalById);
-router.post('/', createRental);
+router.post('/', authRequired, createRental);
 router.put('/:id', updateRental);
 router.delete('/:id', deleteRental);
 
