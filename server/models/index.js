@@ -10,7 +10,7 @@ const options = {
 
 mongoose
   .connect(config.MONGODB_URI, options)
-  .then(() => console.log('MongoDB connected successfully...'))
+  .then(() => console.log('MongoDB connected successfully...\n'))
   .catch((err) => console.log(err));
 
 module.exports = {
