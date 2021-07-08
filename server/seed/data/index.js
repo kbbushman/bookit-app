@@ -23,7 +23,7 @@ const userData = [
 
 const rentalData = [
   {
-    title: 'Nice view on ocean',
+    title: 'Nice ocean view',
     city: 'San Francisco',
     street: '2nd St',
     category: 'condo',
@@ -31,20 +31,20 @@ const rentalData = [
       'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 4,
     shared: true,
-    description: 'Very nice condo in center of the city.',
+    description: 'Spacious condo with a beautiful ocean view.',
     dailyPrice: 99,
     owner: userData[0]._id,
   },
   {
-    title: 'Modern apartment in center',
+    title: 'Modern spacious apartment',
     city: 'New York',
-    street: '5th Avenue',
+    street: '17 W 32nd St',
     category: 'apartment',
     image:
       'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 1,
     shared: false,
-    description: 'Very nice apartment in center of the city.',
+    description: 'Modern spacious apartment in the center of the city.',
     dailyPrice: 130,
     owner: userData[0]._id,
   },
