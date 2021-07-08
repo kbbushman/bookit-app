@@ -30,7 +30,6 @@ export function MapProvider({ children, apiKey }) {
 
   function getCachedLocation(location) {
     const locationKey = normalizeLocation(location);
-    console.log(cache.current[locationKey]);
     return cache.current[locationKey];
   }
 
@@ -42,7 +41,6 @@ export function MapProvider({ children, apiKey }) {
   }
 
   async function requestGeoLocation(location) {
-    console.log('GEOCODE API CALL');
     try {
       const { data } = await axios.get(
         `https://api.tomtom.com/search/2/geocode/${location}.JSON?key=${apiKey}`
