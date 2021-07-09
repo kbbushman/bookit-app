@@ -48,3 +48,18 @@ body {
     border-color: $primary-dark;
   }
 }
+
+.btn-bi-form {
+  background-color: $primary-dark;
+  color: $primary-color;
+  border-color: $primary-dark;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $primary-color;
+    color: $primary-dark;
+    border-color: $primary-color;
+    outline: none;
+  }
+}
