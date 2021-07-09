@@ -1,14 +1,24 @@
+import RentalForm from 'components/forms/RentalForm';
+import { createRental } from 'actions';
 import createImage from 'images/create-rental.jpg';
-import RentalForm from '../components/forms/RentalForm';
 
-function RentalNewPage() {
+function RentalNewPage({ history }) {
+  async function handleCreateRental(formData) {
+    try {
+      await createRental(formData);
+      history.push('/');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <section id="newRental">
       <div className="bi-form">
         <div className="row">
           <div className="col-md-5">
             <h1 className="page-title">Create Rental</h1>
-            <RentalForm />
+            <RentalForm handleCreateRental={handleCreateRental} />
             {/* <div>
               <p>
                 Some Errors
