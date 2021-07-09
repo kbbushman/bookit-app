@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosService from 'services/AxiosService';
 import {
   FETCH_RENTALS,
@@ -9,7 +8,7 @@ import {
   FETCH_ONE_RENTAL_FAILURE,
 } from './actionTypes';
 
-const BASE_URL = '/api/v1/rentals/';
+const BASE_URL = '/rentals/';
 const { biAxios } = axiosService;
 
 export function fetchRentals() {
@@ -17,7 +16,7 @@ export function fetchRentals() {
     dispatch({ type: FETCH_RENTALS });
 
     try {
-      const { data } = await axios.get(BASE_URL);
+      const { data } = await biAxios.get(BASE_URL);
       dispatch({ type: FETCH_RENTALS_SUCCESS, rentals: data });
     } catch (err) {
       dispatch({
@@ -33,7 +32,7 @@ export function fetchOneRental(id) {
     dispatch({ type: FETCH_ONE_RENTAL });
 
     try {
-      const { data } = await axios.get(BASE_URL + id);
+      const { data } = await biAxios.get(BASE_URL + id);
       dispatch({ type: FETCH_ONE_RENTAL_SUCCESS, rental: data });
     } catch (err) {
       dispatch({
@@ -45,5 +44,5 @@ export function fetchOneRental(id) {
 }
 
 export function createRental(rental) {
-  return biAxios.post('/rentals', rental);
+  return biAxios.post(BASE_URL, rental);
 }
