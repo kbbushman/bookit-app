@@ -16,4 +16,5 @@ mongoose
 module.exports = {
   Rental: require('./Rental'),
   User: require('./User'),
+  Booking: require('./Booking'),
 };
