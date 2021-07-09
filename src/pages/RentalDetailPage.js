@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import RentalDetails from '../components/rental/RentalDetails';
-import RentalMedia from '../components/rental/RentalMedia';
+import RentalDetails from 'components/rental/RentalDetails';
+import RentalMedia from 'components/rental/RentalMedia';
+import Booking from 'components/booking/Booking';
 import { fetchOneRental } from 'actions';
 
 function RentalDetailPage() {
@@ -33,7 +34,9 @@ function RentalDetailPage() {
           <div className="col-md-8">
             <RentalDetails rental={rental} />
           </div>
-          <div className="col-md-4">BOOKING</div>
+          <div className="col-md-4">
+            <Booking />
+          </div>
         </div>
       </div>
     </section>
