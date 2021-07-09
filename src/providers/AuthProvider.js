@@ -1,8 +1,7 @@
 import { createContext, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt from 'jsonwebtoken';
-import { loginUser } from 'actions';
-import { USER_AUTHENTICATED, USER_LOGGED_OUT } from 'actions/actionTypes';
+import { logInUser, logOutUser, userAuthenticated } from 'actions';
 
 const AuthContext = createContext(null);
 
@@ -35,21 +34,21 @@ export function AuthProvider(props) {
   function checkAuthState() {
     if (isAuthenticated()) {
       const { username } = decodeToken(getToken());
-      dispatch({ type: USER_AUTHENTICATED, username });
+      dispatch(userAuthenticated(username));
     }
   }
 
   async function logIn(formData) {
-    const { token } = await loginUser(formData);
+    const { token } = await logInUser(formData);
     localStorage.setItem(TOKEN_ITEM, token);
     const { username } = decodeToken(token);
-    dispatch({ type: USER_AUTHENTICATED, username });
+    dispatch(userAuthenticated(username));
     return token;
   }
 
   function logOut() {
     localStorage.removeItem(TOKEN_ITEM);
-    dispatch({ type: USER_LOGGED_OUT });
+    dispatch(logOutUser());
   }
 
   const authApi = { logIn, logOut, checkAuthState, isAuthenticated };
