@@ -1,17 +1,18 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import BiModal from '../shared/Modal';
-import { createBooking } from 'actions';
+import { createBooking, getBookings } from 'actions';
 
 function Booking({ rental }) {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [guests, setGuests] = useState('');
   const [nights, setNights] = useState(null);
   const [price, setPrice] = useState(null);
+  const [bookedDates, setBookedDates] = useState(null);
   const [datesSelected, setDateselected] = useState(null);
   const [dateRange, setDateRange] = useState([
     {
@@ -20,6 +21,12 @@ function Booking({ rental }) {
       key: 'selection',
     },
   ]);
+
+  useEffect(() => {
+    getBookings(rental._id)
+      .then((bookings) => setBookedDates(bookings))
+      .catch((err) => console.log(err));
+  }, [rental._id]);
 
   function getFormattedDates() {
     return {
@@ -62,7 +69,7 @@ function Booking({ rental }) {
 
   async function handleCreateBooking() {
     const booking = {
-      rental: id,
+      rental: rental._id,
       guests: parseInt(guests),
       nights,
       price,
