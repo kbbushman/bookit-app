@@ -55,12 +55,18 @@ body {
   color: $primary-color;
   border-color: $primary-dark;
 
-  &:hover,
-  &:focus,
-  &:active {
+  &:hover {
     background-color: $primary-color;
     color: $primary-dark;
     border-color: $primary-color;
+    outline: none;
+  }
+
+  &:active,
+  &:focus {
+    background-color: $primary-dark;
+    color: $primary-color;
+    border-color: $primary-dark;
     outline: none;
   }
 
