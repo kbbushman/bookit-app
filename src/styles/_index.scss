@@ -80,3 +80,11 @@ body {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 990px) {
+  .container,
+  .container-md,
+  .container-sm {
+    max-width: 920px;
+  }
+}

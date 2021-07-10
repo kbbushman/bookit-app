@@ -31,10 +31,10 @@ function RentalDetailPage() {
 
       <div className="details-section">
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-7 col-lg-7 col-xl-8">
             <RentalDetails rental={rental} />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-5 col-lg-5 col-xl-4">
             <Booking rental={rental} />
           </div>
         </div>
