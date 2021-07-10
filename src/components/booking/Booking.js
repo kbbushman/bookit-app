@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
+import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import BiModal from '../shared/Modal';
 
 function Booking({ rental }) {
@@ -8,6 +9,8 @@ function Booking({ rental }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [guests, setGuests] = useState('');
+  const [nights, setNights] = useState(null);
+  const [price, setPrice] = useState(null);
   const [datesSelected, setDateselected] = useState(null);
   const [dateRange, setDateRange] = useState([
     {
@@ -37,6 +40,21 @@ function Booking({ rental }) {
   function handleSetDateRange(dateRangeArray) {
     setDateRange(dateRangeArray);
     setDateselected(true);
+  }
+
+  function setModelDetails() {
+    const nights = formatDistanceStrict(
+      dateRange[0].startDate,
+      dateRange[0].endDate,
+      { unit: 'day' }
+    ).replace('days', '');
+    setNights(nights);
+    setPrice(parseInt(nights) * rental.dailyPrice);
+  }
+
+  function openConfirmModal() {
+    setModelDetails();
+    setIsModalOpen(true);
   }
 
   function handleBooking() {
@@ -104,7 +122,7 @@ function Booking({ rental }) {
       <div className="d-grid">
         <button
           className="btn btn-lg btn-bi-form"
-          onClick={() => setIsModalOpen(true)}
+          onClick={openConfirmModal}
           disabled={!datesSelected || !guests}
         >
           Reserve Now
@@ -124,13 +142,13 @@ function Booking({ rental }) {
         title="Confirm Reservation"
         subtitle={displayDateRange()}
       >
-        <strong>2</strong> Nights / <strong>${rental.dailyPrice}</strong> per
-        Night
+        <strong>{nights}</strong> Nights / <strong>${rental.dailyPrice}</strong>{' '}
+        per Night
         <p>
           Guests: <strong>{guests}</strong>
         </p>
         <p>
-          Price: <strong>$250</strong>
+          Price: <strong>${price}</strong>
         </p>
         <p>Do you confirm these reservation details?</p>
       </BiModal>
