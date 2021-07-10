@@ -29,7 +29,7 @@ function Booking({ rental }) {
   function displayDateRange() {
     return datesSelected
       ? `${dateRange[0].startDate.toLocaleDateString()} - ${dateRange[0].endDate.toLocaleDateString()}`
-      : '-- Please select dates --';
+      : 'Please select dates';
   }
 
   function handleSetDateRange(dateRangeArray) {
@@ -94,7 +94,7 @@ function Booking({ rental }) {
           id="guests"
           aria-describedby="guests"
           min={1}
-          placeholder="-- Please enter number of guests --"
+          placeholder="Please enter guest count"
           value={guests}
           onChange={(e) => setGuests(e.target.value)}
         />
