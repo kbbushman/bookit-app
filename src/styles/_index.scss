@@ -63,4 +63,20 @@ body {
     border-color: $primary-color;
     outline: none;
   }
+
+  &:disabled {
+    color: #bbb;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.rdrCalendarWrapper {
+  display: block;
+
+  .rdrMonth {
+    width: 100%;
+  }
 }
