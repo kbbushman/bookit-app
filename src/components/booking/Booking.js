@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import BiModal from '../shared/Modal';
+import { createBooking } from 'actions';
 
 function Booking({ rental }) {
   const { id } = useParams();
@@ -59,14 +60,21 @@ function Booking({ rental }) {
     setIsModalOpen(true);
   }
 
-  function handleBooking() {
-    console.log({
+  async function handleCreateBooking() {
+    const booking = {
       rental: id,
       guests: parseInt(guests),
       nights,
       price,
       ...getFormattedDates(),
-    });
+    };
+    try {
+      await createBooking(booking);
+      alert('Sucess!');
+      setIsModalOpen(false);
+    } catch (err) {
+      alert(JSON.stringify(err, null, 4));
+    }
   }
 
   return (
@@ -142,7 +150,7 @@ function Booking({ rental }) {
       <BiModal
         open={isModalOpen}
         onCloseModal={() => setIsModalOpen(false)}
-        onSubmit={handleBooking}
+        onSubmit={handleCreateBooking}
         title="Confirm Reservation"
         subtitle={displayDateRange()}
       >
