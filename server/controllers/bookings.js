@@ -34,9 +34,9 @@ exports.createBooking = async (req, res) => {
       });
     }
 
-    const savedBooking = await newBooking.save();
+    const { startDate, endDate } = await newBooking.save();
 
-    res.status(201).json({ booking: savedBooking });
+    res.status(201).json({ startDate, endDate });
   } catch (err) {
     res.sendMongoError(err);
   }
