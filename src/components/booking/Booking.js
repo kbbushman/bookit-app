@@ -83,16 +83,22 @@ function Booking({ rental }) {
   }
 
   async function handleCreateBooking() {
+    const { startDate, endDate } = getFormattedDates();
     const booking = {
       rental: rental._id,
       guests: parseInt(guests),
       nights,
       price,
-      ...getFormattedDates(),
+      startDate,
+      endDate,
     };
     try {
-      await createBooking(booking);
-      alert('Sucess!');
+      const { startDate, endDate } = await createBooking(booking);
+      const newBookingDates = eachDayOfInterval({
+        start: new Date(startDate),
+        end: new Date(endDate),
+      });
+      setDisabledDates([...disabledDates, ...newBookingDates]);
       setIsModalOpen(false);
     } catch (err) {
       alert(JSON.stringify(err, null, 4));
