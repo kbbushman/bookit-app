@@ -53,17 +53,30 @@
 }
 
 // MODAL
-.booking-modal {
+
+.bi-modal {
+  width: 90%;
+  padding: 60px 0;
+
+  .modal-container {
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
   .title {
     font-weight: 700;
     font-size: 26px;
+  }
+
+  .modal-body {
+    padding-left: 0;
   }
 
   .buttons {
     margin: 15px 0px;
   }
 
-  em {
+  strong {
     font-style: normal;
     font-size: 17px;
     font-weight: 700;
