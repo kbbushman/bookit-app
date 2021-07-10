@@ -47,9 +47,11 @@ function Booking({ rental }) {
       dateRange[0].startDate,
       dateRange[0].endDate,
       { unit: 'day' }
-    ).replace('days', '');
-    setNights(nights);
-    setPrice(parseInt(nights) * rental.dailyPrice);
+    )
+      .replace('days', '')
+      .replace(' ', '');
+    setNights(parseInt(nights));
+    setPrice(nights * rental.dailyPrice);
   }
 
   function openConfirmModal() {
@@ -60,7 +62,9 @@ function Booking({ rental }) {
   function handleBooking() {
     console.log({
       rental: id,
-      guests,
+      guests: parseInt(guests),
+      nights,
+      price,
       ...getFormattedDates(),
     });
   }
