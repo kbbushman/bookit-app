@@ -1,5 +1,17 @@
 const { Booking } = require('../models');
 
+exports.getBookings = async (req, res) => {
+  const { rental } = req.query;
+  const query = rental ? Booking.find({ rental }) : Booking.find({});
+
+  try {
+    const bookings = await query.select('startDate endDate -_id').exec();
+    return res.json(bookings);
+  } catch (err) {
+    return res.sendMongoError(err);
+  }
+};
+
 exports.createBooking = async (req, res) => {
   const bookingData = req.body;
   const newBooking = new Booking({ ...bookingData, user: res.locals.user._id });
