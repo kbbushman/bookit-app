@@ -12,3 +12,9 @@
   opacity: 0.3;
   margin-top: 50px;
 }
+
+@media screen and (min-width: 1400px) {
+  #bi-map {
+    height: 420px;
+  }
+}
