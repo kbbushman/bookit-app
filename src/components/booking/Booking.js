@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
+import eachDayOfInterval from 'date-fns/eachDayOfInterval';
 import BiModal from '../shared/Modal';
 import { createBooking, getBookings } from 'actions';
 
 function Booking({ rental }) {
-  // const { id } = useParams();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [guests, setGuests] = useState('');
@@ -23,9 +22,14 @@ function Booking({ rental }) {
   ]);
 
   useEffect(() => {
-    getBookings(rental._id)
-      .then((bookings) => setBookedDates(bookings))
-      .catch((err) => console.log(err));
+    let componentIsMounted = true;
+    async function asyncGetBookings() {
+      const bookings = componentIsMounted && (await getBookings(rental._id));
+      componentIsMounted && setBookedDates(bookings);
+    }
+    asyncGetBookings();
+
+    return () => (componentIsMounted = false);
   }, [rental._id]);
 
   function getFormattedDates() {
@@ -37,6 +41,18 @@ function Booking({ rental }) {
         dateRange[0].endDate.setHours(12, 0, 0, 0)
       ).toISOString(),
     };
+  }
+
+  function getDisabledDates() {
+    const dates = [];
+    bookedDates.forEach(({ startDate, endDate }) => {
+      const results = eachDayOfInterval({
+        start: new Date(startDate),
+        end: new Date(endDate),
+      });
+      dates.push(...results);
+    });
+    return dates;
   }
 
   function displayDateRange() {
@@ -112,7 +128,8 @@ function Booking({ rental }) {
               months={1}
               ranges={dateRange}
               minDate={new Date()}
-              direction="horizontal"
+              disabledDates={getDisabledDates()}
+              direction="vertical"
             />
             <div className="d-grid justify-content-md-end">
               <button
