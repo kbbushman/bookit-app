@@ -66,7 +66,7 @@ function Booking({ rental }) {
     setDateselected(true);
   }
 
-  function setModelDetails() {
+  function setModalDetails() {
     const nights = formatDistanceStrict(
       dateRange[0].startDate,
       dateRange[0].endDate,
@@ -79,7 +79,7 @@ function Booking({ rental }) {
   }
 
   function openConfirmModal() {
-    setModelDetails();
+    setModalDetails();
     setIsModalOpen(true);
   }
 
