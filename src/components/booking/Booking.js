@@ -67,14 +67,13 @@ function Booking({ rental }) {
   }
 
   function setModalDetails() {
-    const nights = formatDistanceStrict(
+    const nightCountString = formatDistanceStrict(
       dateRange[0].startDate,
       dateRange[0].endDate,
       { unit: 'day' }
-    )
-      .replace('days', '')
-      .replace(' ', '');
-    setNights(parseInt(nights));
+    );
+    const nights = parseInt(nightCountString);
+    setNights(nights);
     setPrice(nights * rental.dailyPrice);
   }
 
