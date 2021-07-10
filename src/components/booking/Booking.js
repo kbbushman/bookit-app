@@ -11,7 +11,7 @@ function Booking({ rental }) {
   const [guests, setGuests] = useState('');
   const [nights, setNights] = useState(null);
   const [price, setPrice] = useState(null);
-  const [bookedDates, setBookedDates] = useState(null);
+  const [disabledDates, setDisabledDates] = useState(null);
   const [datesSelected, setDateselected] = useState(null);
   const [dateRange, setDateRange] = useState([
     {
@@ -25,7 +25,7 @@ function Booking({ rental }) {
     let componentIsMounted = true;
     async function asyncGetBookings() {
       const bookings = componentIsMounted && (await getBookings(rental._id));
-      componentIsMounted && setBookedDates(bookings);
+      componentIsMounted && disableBookedDates(bookings);
     }
     asyncGetBookings();
 
@@ -43,7 +43,7 @@ function Booking({ rental }) {
     };
   }
 
-  function getDisabledDates() {
+  function disableBookedDates(bookedDates) {
     const dates = [];
     bookedDates.forEach(({ startDate, endDate }) => {
       const results = eachDayOfInterval({
@@ -52,7 +52,7 @@ function Booking({ rental }) {
       });
       dates.push(...results);
     });
-    return dates;
+    setDisabledDates(dates);
   }
 
   function displayDateRange() {
@@ -128,7 +128,7 @@ function Booking({ rental }) {
               months={1}
               ranges={dateRange}
               minDate={new Date()}
-              disabledDates={getDisabledDates()}
+              disabledDates={disabledDates}
               direction="vertical"
             />
             <div className="d-grid justify-content-md-end">
