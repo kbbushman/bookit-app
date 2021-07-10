@@ -19,7 +19,7 @@ function RentalDetailPage() {
     dispatch(fetchOneRental(id));
   }, [id, dispatch]);
 
-  if (isLoading) return <h2>Loading...</h2>;
+  if (isLoading || !rental._id) return null;
 
   if (errors) return <h2>{errors[0].message}</h2>;
 
@@ -35,7 +35,7 @@ function RentalDetailPage() {
             <RentalDetails rental={rental} />
           </div>
           <div className="col-md-4">
-            <Booking />
+            <Booking rental={rental} />
           </div>
         </div>
       </div>
