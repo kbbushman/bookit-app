@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
+import BiModal from '../shared/Modal';
 
 function Booking({ rental }) {
   const { id } = useParams();
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [guests, setGuests] = useState('');
   const [datesSelected, setDateselected] = useState(null);
   const [dateRange, setDateRange] = useState([
@@ -102,7 +104,7 @@ function Booking({ rental }) {
       <div className="d-grid">
         <button
           className="btn btn-lg btn-bi-form"
-          onClick={handleBooking}
+          onClick={() => setIsModalOpen(true)}
           disabled={!datesSelected || !guests}
         >
           Reserve Now
@@ -115,6 +117,23 @@ function Booking({ rental }) {
       <p className="booking-note-text">
         More than 500 people checked this rental in last month.
       </p>
+      <BiModal
+        open={isModalOpen}
+        onCloseModal={() => setIsModalOpen(false)}
+        onSubmit={handleBooking}
+        title="Confirm Reservation"
+        subtitle={displayDateRange()}
+      >
+        <strong>2</strong> Nights / <strong>${rental.dailyPrice}</strong> per
+        Night
+        <p>
+          Guests: <strong>{guests}</strong>
+        </p>
+        <p>
+          Price: <strong>$250</strong>
+        </p>
+        <p>Do you confirm these reservation details?</p>
+      </BiModal>
     </div>
   );
 }
