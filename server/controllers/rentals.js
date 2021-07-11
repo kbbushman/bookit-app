@@ -18,7 +18,7 @@ exports.getUserRentals = async (req, res) => {
 
   try {
     const rentals = await Rental.find({ owner: user });
-    res.json({ rentals });
+    res.json(rentals);
   } catch (err) {
     res.sendMongoError(err);
   }
