@@ -11,7 +11,10 @@ exports.getRentals = async (req, res) => {
 
 exports.getRentalById = async (req, res) => {
   try {
-    const rental = await Rental.findById(req.params.id);
+    const rental = await Rental.findById(req.params.id).populate(
+      'owner',
+      '-password -_id -updatedAt -__v'
+    );
     if (!rental) {
       return res.sendApiError({
         title: 'Find Rental Error',
