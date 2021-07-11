@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { DateRange } from 'react-date-range';
+import { toast } from 'react-toastify';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import eachDayOfInterval from 'date-fns/eachDayOfInterval';
 import BiModal from '../shared/Modal';
@@ -126,6 +127,9 @@ function Booking({ rental }) {
       setDisabledDates([...disabledDates, ...newBookingDates]);
       resetBookingDetails();
       setIsModalOpen(false);
+      toast.success('Your reservation has been created!', {
+        autoClose: 4000,
+      });
     } catch (err) {
       setErrors(err);
       setDateselected(false);
