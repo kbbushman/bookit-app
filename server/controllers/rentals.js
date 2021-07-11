@@ -13,6 +13,17 @@ exports.getRentals = async (req, res) => {
   }
 };
 
+exports.getUserRentals = async (req, res) => {
+  const { user } = res.locals;
+
+  try {
+    const rentals = await Rental.find({ owner: user });
+    res.json({ rentals });
+  } catch (err) {
+    res.sendMongoError(err);
+  }
+};
+
 exports.getRentalById = async (req, res) => {
   try {
     const rental = await Rental.findById(req.params.id).populate(
