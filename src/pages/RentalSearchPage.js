@@ -15,9 +15,11 @@ function RentalSearchPage() {
   }, [dispatch, location]);
 
   const renderRentals = () => {
-    return rentals.map((rental) => (
-      <RentalCard key={rental._id} rental={rental} />
-    ));
+    return rentals.length ? (
+      rentals.map((rental) => <RentalCard key={rental._id} rental={rental} />)
+    ) : (
+      <p className="alert alert-warning">No rentals found for {location}</p>
+    );
   };
 
   return (
