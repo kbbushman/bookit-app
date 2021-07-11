@@ -7,6 +7,15 @@ function RentalDetails({ rental }) {
       <h2 className={`rental-type type-${rental.category}`}>
         {rental.shared && 'Shared'} {rental.category}
       </h2>
+      {rental.owner && (
+        <div className="rental-owner">
+          <img
+            src="https://api.hello-avatar.com/adorables/face/eyes5/nose2/mouth1/d68000/120"
+            alt="owner"
+          />
+          <span>{rental.owner.username}</span>
+        </div>
+      )}
       <h1 className="rental-title">{rental.title}</h1>
       <h2 className="rental-city">{capitalize(rental.city)}</h2>
       <div className="rental-room-info">
