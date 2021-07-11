@@ -11,12 +11,14 @@ import {
 const BASE_URL = '/rentals/';
 const { biAxios } = axiosService;
 
-export function fetchRentals() {
+export function fetchRentals(location) {
   return async function (dispatch) {
+    const url = location ? `/rentals?city=${location}` : BASE_URL;
+
     dispatch({ type: FETCH_RENTALS });
 
     try {
-      const { data } = await biAxios.get(BASE_URL);
+      const { data } = await biAxios.get(url);
       dispatch({ type: FETCH_RENTALS_SUCCESS, rentals: data });
     } catch (err) {
       dispatch({
