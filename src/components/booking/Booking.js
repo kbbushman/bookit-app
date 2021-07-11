@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import { toast } from 'react-toastify';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
@@ -7,7 +8,7 @@ import BiModal from '../shared/Modal';
 import ApiErrors from '../forms/ApiErrors';
 import { createBooking, getBookings } from 'actions';
 
-function Booking({ rental }) {
+function Booking({ rental, isAuth }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [guests, setGuests] = useState('');
@@ -144,63 +145,95 @@ function Booking({ rental }) {
         <span className="booking-per-night">per night</span>
       </h3>
       <hr></hr>
-      <div className="form-group mb-3">
-        <label htmlFor="dates" className="d-block">
-          Dates
-        </label>
-        <input
-          type="text"
-          className="form-control text-muted mb-1 pointer"
-          value={displayDateRange()}
-          onClick={() => setShowDatePicker(!showDatePicker)}
-          readOnly
-        />
-        {showDatePicker && (
-          <>
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item) => handleSetDateRange([item.selection])}
-              moveRangeOnFirstSelection={false}
-              showDateDisplay={false}
-              months={1}
-              ranges={dateRange}
-              minDate={new Date()}
-              disabledDates={disabledDates}
-              direction="vertical"
+      {!isAuth && (
+        <div className="d-grid">
+          <Link className="btn btn-lg btn-bi-form" to="/login">
+            Log In to Reserve
+          </Link>
+        </div>
+      )}
+      {isAuth && (
+        <>
+          <div className="form-group mb-3">
+            <label htmlFor="dates" className="d-block">
+              Dates
+            </label>
+            <input
+              type="text"
+              className="form-control text-muted mb-1 pointer"
+              value={displayDateRange()}
+              onClick={() => setShowDatePicker(!showDatePicker)}
+              readOnly
             />
-            <div className="d-grid justify-content-md-end">
-              <button
-                className="btn btn-primary"
-                onClick={() => setShowDatePicker(false)}
-              >
-                Close
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="form-group mb-3">
-        <label htmlFor="guests">Guests</label>
-        <input
-          className="form-control"
-          type="number"
-          id="guests"
-          aria-describedby="guests"
-          min={1}
-          placeholder="Please enter guest count"
-          value={guests}
-          onChange={(e) => setGuests(e.target.value)}
-        />
-      </div>
-      <div className="d-grid">
-        <button
-          className="btn btn-lg btn-bi-form"
-          onClick={openConfirmModal}
-          disabled={!datesSelected || !guests}
-        >
-          Reserve Now
-        </button>
-      </div>
+            {showDatePicker && (
+              <>
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={(item) => handleSetDateRange([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  showDateDisplay={false}
+                  months={1}
+                  ranges={dateRange}
+                  minDate={new Date()}
+                  disabledDates={disabledDates}
+                  direction="vertical"
+                />
+                <div className="d-grid justify-content-md-end">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setShowDatePicker(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="guests">Guests</label>
+            <input
+              className="form-control"
+              type="number"
+              id="guests"
+              aria-describedby="guests"
+              min={1}
+              placeholder="Please enter guest count"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+            />
+          </div>
+          <div className="d-grid">
+            <button
+              className="btn btn-lg btn-bi-form"
+              onClick={openConfirmModal}
+              disabled={!datesSelected || !guests}
+            >
+              Reserve Now
+            </button>
+          </div>
+          <BiModal
+            open={isModalOpen}
+            onCloseModal={() => setIsModalOpen(false)}
+            onSubmit={handleCreateBooking}
+            title="Confirm Reservation"
+            subtitle={displayDateRange()}
+          >
+            <strong>{nights}</strong> Nights /{' '}
+            <strong>${rental.dailyPrice}</strong> per Night
+            <p>
+              Guests: <strong>{guests}</strong>
+            </p>
+            <p>
+              Price: <strong>${price}</strong>
+            </p>
+            {errors ? (
+              <ApiErrors errors={errors} />
+            ) : (
+              <p>Do you confirm these reservation details?</p>
+            )}
+          </BiModal>
+        </>
+      )}
       <hr></hr>
       <p className="booking-note-title">
         People are interested into this house
@@ -208,27 +241,6 @@ function Booking({ rental }) {
       <p className="booking-note-text">
         More than 500 people checked this rental in last month.
       </p>
-      <BiModal
-        open={isModalOpen}
-        onCloseModal={() => setIsModalOpen(false)}
-        onSubmit={handleCreateBooking}
-        title="Confirm Reservation"
-        subtitle={displayDateRange()}
-      >
-        <strong>{nights}</strong> Nights / <strong>${rental.dailyPrice}</strong>{' '}
-        per Night
-        <p>
-          Guests: <strong>{guests}</strong>
-        </p>
-        <p>
-          Price: <strong>${price}</strong>
-        </p>
-        {errors ? (
-          <ApiErrors errors={errors} />
-        ) : (
-          <p>Do you confirm these reservation details?</p>
-        )}
-      </BiModal>
     </div>
   );
 }
