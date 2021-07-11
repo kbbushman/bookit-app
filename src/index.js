@@ -12,6 +12,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import 'react-toastify/dist/ReactToastify.css';
 import 'index.scss';
 
 const store = initStore();
