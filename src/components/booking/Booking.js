@@ -3,6 +3,7 @@ import { DateRange } from 'react-date-range';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import eachDayOfInterval from 'date-fns/eachDayOfInterval';
 import BiModal from '../shared/Modal';
+import ApiErrors from '../forms/ApiErrors';
 import { createBooking, getBookings } from 'actions';
 
 function Booking({ rental }) {
@@ -13,6 +14,7 @@ function Booking({ rental }) {
   const [price, setPrice] = useState(null);
   const [disabledDates, setDisabledDates] = useState(null);
   const [datesSelected, setDateselected] = useState(null);
+  const [errors, setErrors] = useState(null);
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -32,8 +34,12 @@ function Booking({ rental }) {
   useEffect(() => {
     let componentIsMounted = true;
     async function asyncGetBookings() {
-      const bookings = componentIsMounted && (await getBookings(rental._id));
-      componentIsMounted && disableBookedDates(bookings);
+      try {
+        const bookings = componentIsMounted && (await getBookings(rental._id));
+        componentIsMounted && disableBookedDates(bookings);
+      } catch (err) {
+        setErrors(err);
+      }
     }
     asyncGetBookings();
 
@@ -69,7 +75,17 @@ function Booking({ rental }) {
     setDateselected(true);
   }
 
-  function setModalDetails() {
+  function resetDateRange() {
+    setDateRange([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection',
+      },
+    ]);
+  }
+
+  function setBookingDetails() {
     const nightCountString = formatDistanceStrict(
       dateRange[0].startDate,
       dateRange[0].endDate,
@@ -80,8 +96,17 @@ function Booking({ rental }) {
     setPrice(nights * rental.dailyPrice);
   }
 
+  function resetBookingDetails() {
+    resetDateRange();
+    setGuests('');
+    setNights(null);
+    setPrice(null);
+    setDateselected(false);
+  }
+
   function openConfirmModal() {
-    setModalDetails();
+    setBookingDetails();
+    setErrors(null);
     setIsModalOpen(true);
   }
 
@@ -99,9 +124,12 @@ function Booking({ rental }) {
       const { startDate, endDate } = await createBooking(booking);
       const newBookingDates = getDatesFromRange(startDate, endDate);
       setDisabledDates([...disabledDates, ...newBookingDates]);
+      resetBookingDetails();
       setIsModalOpen(false);
     } catch (err) {
-      alert(JSON.stringify(err, null, 4));
+      setErrors(err);
+      setDateselected(false);
+      resetDateRange();
     }
   }
 
@@ -191,7 +219,11 @@ function Booking({ rental }) {
         <p>
           Price: <strong>${price}</strong>
         </p>
-        <p>Do you confirm these reservation details?</p>
+        {errors ? (
+          <ApiErrors errors={errors} />
+        ) : (
+          <p>Do you confirm these reservation details?</p>
+        )}
       </BiModal>
     </div>
   );
