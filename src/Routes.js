@@ -6,6 +6,7 @@ import RentalDetailPage from 'pages/RentalDetailPage';
 import AuthRoute from 'components/auth/AuthRoute';
 import GuestRoute from 'components/auth/GuestRoute';
 import RentalNewPage from 'pages/RentalNewPage';
+import RentalSearchPage from 'pages/RentalSearchPage';
 
 function Routes() {
   return (
@@ -14,6 +15,7 @@ function Routes() {
       <GuestRoute path="/login" component={LoginPage} />
       <GuestRoute path="/register" component={RegisterPage} />
       <AuthRoute path="/rentals/new" component={RentalNewPage} />
+      <Route path="/rentals/search/:location" component={RentalSearchPage} />
       <Route path="/rentals/:id" component={RentalDetailPage} />
     </Switch>
   );
