@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer } from 'react-toastify';
 import App from 'App';
 import { AuthProvider } from 'providers/AuthProvider';
 import { MapProvider } from 'providers/MapProvider';
@@ -24,6 +25,7 @@ ReactDOM.render(
     <Provider store={store}>
       <AuthProvider>
         <MapProvider apiKey="N6OcrIpWfFwnTLIPEksAN31KNeoQ3pda">
+          <ToastContainer />
           <App />
         </MapProvider>
       </AuthProvider>
