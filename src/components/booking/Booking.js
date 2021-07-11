@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { DateRange } from 'react-date-range';
 import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import eachDayOfInterval from 'date-fns/eachDayOfInterval';
@@ -21,6 +21,14 @@ function Booking({ rental }) {
     },
   ]);
 
+  const disableBookedDates = useCallback((bookedDates) => {
+    const dates = [];
+    bookedDates.forEach(({ startDate, endDate }) => {
+      dates.push(...getDatesFromRange(startDate, endDate));
+    });
+    setDisabledDates(dates);
+  }, []);
+
   useEffect(() => {
     let componentIsMounted = true;
     async function asyncGetBookings() {
@@ -30,7 +38,7 @@ function Booking({ rental }) {
     asyncGetBookings();
 
     return () => (componentIsMounted = false);
-  }, [rental._id]);
+  }, [rental._id, disableBookedDates]);
 
   function getFormattedDates() {
     return {
@@ -43,16 +51,11 @@ function Booking({ rental }) {
     };
   }
 
-  function disableBookedDates(bookedDates) {
-    const dates = [];
-    bookedDates.forEach(({ startDate, endDate }) => {
-      const results = eachDayOfInterval({
-        start: new Date(startDate),
-        end: new Date(endDate),
-      });
-      dates.push(...results);
+  function getDatesFromRange(startDate, endDate) {
+    return eachDayOfInterval({
+      start: new Date(startDate),
+      end: new Date(endDate),
     });
-    setDisabledDates(dates);
   }
 
   function displayDateRange() {
@@ -94,10 +97,7 @@ function Booking({ rental }) {
     };
     try {
       const { startDate, endDate } = await createBooking(booking);
-      const newBookingDates = eachDayOfInterval({
-        start: new Date(startDate),
-        end: new Date(endDate),
-      });
+      const newBookingDates = getDatesFromRange(startDate, endDate);
       setDisabledDates([...disabledDates, ...newBookingDates]);
       setIsModalOpen(false);
     } catch (err) {
