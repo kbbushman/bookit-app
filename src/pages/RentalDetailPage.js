@@ -9,6 +9,7 @@ import { fetchOneRental } from 'actions';
 function RentalDetailPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.auth);
   const {
     data: rental,
     isLoading,
@@ -35,7 +36,7 @@ function RentalDetailPage() {
             <RentalDetails rental={rental} />
           </div>
           <div className="col-md-5 col-lg-5 col-xl-4">
-            <Booking rental={rental} />
+            <Booking rental={rental} isAuth={isAuth} />
           </div>
         </div>
       </div>
