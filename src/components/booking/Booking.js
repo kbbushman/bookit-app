@@ -13,7 +13,7 @@ function Booking({ rental }) {
   const [nights, setNights] = useState(null);
   const [price, setPrice] = useState(null);
   const [disabledDates, setDisabledDates] = useState(null);
-  const [datesSelected, setDateselected] = useState(null);
+  const [datesSelected, setDateselected] = useState(false);
   const [errors, setErrors] = useState(null);
   const [dateRange, setDateRange] = useState([
     {
