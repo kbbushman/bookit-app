@@ -1,5 +1,6 @@
 import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import RentalSearch from '../rental/RentalSearch';
 
 function Header({ logOut }) {
   const { isAuth, username } = useSelector((state) => state.auth);
@@ -22,17 +23,7 @@ function Header({ logOut }) {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-bi-main" type="submit">
-              Search
-            </button>
-          </form>
+          <RentalSearch />
 
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             {isAuth && (
