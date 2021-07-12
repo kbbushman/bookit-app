@@ -55,7 +55,25 @@ function Header({ logOut }) {
                   >
                     <li>
                       <NavLink className="dropdown-item" to="/rentals/new">
-                        New Rental
+                        Add Rental
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/rentals/manage">
+                        My Rentals
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/bookings/manage">
+                        My Bookings
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/bookings/received"
+                      >
+                        Received Bookings
                       </NavLink>
                     </li>
                   </ul>
