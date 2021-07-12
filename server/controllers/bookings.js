@@ -1,4 +1,5 @@
 const { Booking, Rental } = require('../models');
+const formatDistanceToNowStrict = require('date-fns/formatDistanceToNowStrict');
 
 exports.getBookings = async (req, res) => {
   const { rental } = req.query;
@@ -101,3 +102,45 @@ function validateBooking(newBooking, rentalBookings) {
 
   return isValid;
 }
+
+exports.deleteBooking = async (req, res) => {
+  const { id } = req.params;
+  const { user } = res.locals;
+
+  try {
+    const booking = await Booking.findById(id).populate('user');
+
+    if (!booking) {
+      return res.sendApiError({
+        title: 'Booking Delete Error',
+        message: 'Booking does not exist',
+      });
+    }
+
+    if (!booking.user._id.equals(user._id)) {
+      return res.sendApiError({
+        title: 'Booking Delete Error',
+        message: 'You do not have permission to delete this booking',
+      });
+    }
+
+    const daysFromNow = parseInt(
+      formatDistanceToNowStrict(booking.startDate, {
+        unit: 'day',
+      })
+    );
+
+    if (daysFromNow < 3) {
+      return res.sendApiError({
+        title: 'Booking Delete Error',
+        message: 'Booking cannot be deleted 3 days before start date',
+      });
+    }
+
+    await booking.remove();
+
+    res.json({ id });
+  } catch (err) {
+    res.sendMongoError(err);
+  }
+};
