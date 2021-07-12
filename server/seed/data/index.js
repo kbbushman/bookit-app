@@ -19,6 +19,18 @@ const userData = [
     email: 'test3@test.com',
     password: '123456',
   },
+  {
+    _id: mongoose.Types.ObjectId(),
+    username: 'UserFour',
+    email: 'test4@test.com',
+    password: '123456',
+  },
+  {
+    _id: mongoose.Types.ObjectId(),
+    username: 'UserFive',
+    email: 'test5@test.com',
+    password: '123456',
+  },
 ];
 
 const rentalData = [
@@ -60,6 +72,71 @@ const rentalData = [
     description: 'Spacious and luxurious house in a very popular neighborhood.',
     dailyPrice: 150,
     owner: userData[1]._id,
+  },
+  {
+    title: 'Test Rental One',
+    city: 'san francisco',
+    street: '100 market st',
+    category: 'apartment',
+    image:
+      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
+    numOfRooms: 2,
+    description: 'This is just a test.',
+    dailyPrice: 130,
+    shared: true,
+    owner: userData[0]._id,
+  },
+  {
+    title: 'Test Rental Two',
+    city: 'san francisco',
+    street: '400 howard st',
+    category: 'condo',
+    image:
+      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
+    numOfRooms: 4,
+    description: 'This is just a test.',
+    dailyPrice: 99,
+    shared: true,
+    owner: userData[0]._id,
+  },
+  {
+    title: 'Test Rental Three',
+    city: 'san francisco',
+    street: '800 market st',
+    category: 'apartment',
+    image:
+      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
+    numOfRooms: 3,
+    description: 'This is just a test.',
+    dailyPrice: 115,
+    shared: false,
+    owner: userData[0]._id,
+  },
+  {
+    title: 'Test Rental Four',
+    city: 'san francisco',
+    street: '55 montgomery st',
+    category: 'house',
+    image:
+      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
+    numOfRooms: 2,
+    description: 'This is just a test.',
+    dailyPrice: 145,
+    shared: false,
+    owner: userData[0]._id,
+  },
+  {
+    title: 'Test Rental Five',
+    city: 'san francisco',
+    street: '22 Kearny st',
+    category: 'house',
+    image:
+      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
+    numOfRooms: 2,
+    description: 'This is just a test.',
+    dailyPrice: 95,
+    shared: true,
+    owner: userData[0]._id,
   },
 ];
 
