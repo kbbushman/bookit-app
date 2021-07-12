@@ -13,7 +13,7 @@ router.get('/', getRentals);
 router.get('/me', authRequired, getUserRentals);
 router.get('/:id', getRentalById);
 router.post('/', authRequired, createRental);
-router.put('/:id', updateRental);
-router.delete('/:id', deleteRental);
+router.put('/:id', authRequired, updateRental);
+router.delete('/:id', authRequired, deleteRental);
 
 module.exports = router;
