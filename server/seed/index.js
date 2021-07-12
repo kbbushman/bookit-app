@@ -1,4 +1,4 @@
-const { Rental, User } = require('../models');
+const { Rental, User, Booking } = require('../models');
 const { userData, rentalData } = require('./data');
 
 // ANSI color codes
@@ -27,6 +27,7 @@ async function addDocuments(collectionName, Model, data) {
   try {
     await deleteDocuments('users', User);
     await deleteDocuments('rentals', Rental);
+    await deleteDocuments('bookings', Booking);
 
     await addDocuments('users', User, userData);
     await addDocuments('rentals', Rental, rentalData);
