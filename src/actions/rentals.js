@@ -6,6 +6,9 @@ import {
   FETCH_ONE_RENTAL,
   FETCH_ONE_RENTAL_SUCCESS,
   FETCH_ONE_RENTAL_FAILURE,
+  FETCH_USER_RENTALS,
+  FETCH_USER_RENTALS_SUCCESS,
+  FETCH_USER_RENTALS_FAILURE,
 } from './actionTypes';
 
 const BASE_URL = '/rentals/';
@@ -23,6 +26,22 @@ export function fetchRentals(location) {
     } catch (err) {
       dispatch({
         type: FETCH_RENTALS_FAILURE,
+        errors: err.response.data.errors || err.message,
+      });
+    }
+  };
+}
+
+export function fetchUserRentals() {
+  return async function (dispatch) {
+    dispatch({ type: FETCH_USER_RENTALS });
+
+    try {
+      const { data } = await biAxios.get(BASE_URL + 'me');
+      dispatch({ type: FETCH_USER_RENTALS_SUCCESS, rentals: data });
+    } catch (err) {
+      dispatch({
+        type: FETCH_USER_RENTALS_FAILURE,
         errors: err.response.data.errors || err.message,
       });
     }
