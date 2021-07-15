@@ -1,6 +1,13 @@
 import axiosService from 'services/AxiosService';
 import { extractApiErrors } from 'utils/helpers';
-import {} from './actionTypes';
+import {
+  FETCH_OWNER_BOOKINGS,
+  FETCH_OWNER_BOOKINGS_FAILURE,
+  FETCH_OWNER_BOOKINGS_SUCCESS,
+  FETCH_USER_BOOKINGS,
+  FETCH_USER_BOOKINGS_FAILURE,
+  FETCH_USER_BOOKINGS_SUCCESS,
+} from './actionTypes';
 
 const BASE_URL = '/bookings';
 const { biAxios } = axiosService;
@@ -14,4 +21,36 @@ export function createBooking(booking) {
 
 export function getBookings(rentalId) {
   return biAxios.get(`${BASE_URL}?rental=${rentalId}`).then((res) => res.data);
+}
+
+export function fetchUserBookings() {
+  return async function (dispatch) {
+    dispatch({ type: FETCH_USER_BOOKINGS });
+
+    try {
+      const { data } = await biAxios.get(BASE_URL + '/me');
+      dispatch({ type: FETCH_USER_BOOKINGS_SUCCESS, bookings: data });
+    } catch (err) {
+      dispatch({
+        type: FETCH_USER_BOOKINGS_FAILURE,
+        errors: err.response.data.errors || err.message,
+      });
+    }
+  };
+}
+
+export function fetcReceivedBookings() {
+  return async function (dispatch) {
+    dispatch({ type: FETCH_OWNER_BOOKINGS });
+
+    try {
+      const { data } = await biAxios.get(BASE_URL + '/owner');
+      dispatch({ type: FETCH_OWNER_BOOKINGS_SUCCESS, bookings: data });
+    } catch (err) {
+      dispatch({
+        type: FETCH_OWNER_BOOKINGS_FAILURE,
+        errors: err.response.data.errors || err.message,
+      });
+    }
+  };
 }
