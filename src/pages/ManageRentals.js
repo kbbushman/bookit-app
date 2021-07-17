@@ -7,8 +7,6 @@ function ManageRentals() {
   const dispatch = useDispatch();
   const { items: rentals } = useSelector((state) => state.manage.rentals);
 
-  console.log(rentals);
-
   useEffect(() => {
     dispatch(fetchUserRentals());
   }, [dispatch]);
