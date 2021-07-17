@@ -7,16 +7,13 @@ function ManageBookings() {
   const dispatch = useDispatch();
   const { items: bookings } = useSelector((state) => state.manage.bookings);
 
-  console.log(bookings);
-
   useEffect(() => {
     dispatch(fetchUserBookings());
   }, [dispatch]);
 
   return (
     <div>
-      <h1>Manage Bookings</h1>
-      <BookingList />
+      <BookingList bookings={bookings} title={'Manage Bookings'} />
     </div>
   );
 }
