@@ -1,10 +1,25 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import BookingList from 'components/booking/BookingList';
+import { fetcReceivedBookings } from 'actions';
 
 function ManageRentalBookings() {
+  const dispatch = useDispatch();
+  const { items: bookings } = useSelector(
+    (state) => state.manage.receivedBookings
+  );
+
+  useEffect(() => {
+    dispatch(fetcReceivedBookings());
+  }, [dispatch]);
+
   return (
     <div>
-      <h1>Received Bookings</h1>
-      <BookingList />
+      <BookingList
+        bookings={bookings}
+        type="received"
+        title={'Manage Received Bookings'}
+      />
     </div>
   );
 }
