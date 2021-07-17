@@ -10,7 +10,7 @@ function BookingList({ bookings, type, title }) {
           <div key={booking._id} className="col-md-4">
             <div className="card text-center">
               {type === 'received' && (
-                <div className="card-header">From: Some User</div>
+                <div className="card-header">From: {booking.user.username}</div>
               )}
               <div className="card-block">
                 <h4 className="card-title">
