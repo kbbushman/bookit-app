@@ -9,6 +9,9 @@ import {
   FETCH_USER_RENTALS,
   FETCH_USER_RENTALS_SUCCESS,
   FETCH_USER_RENTALS_FAILURE,
+  DELETE_RENTAL,
+  DELETE_RENTAL_SUCCESS,
+  DELETE_RENTAL_FAILURE,
 } from './actionTypes';
 
 const BASE_URL = '/rentals/';
@@ -66,4 +69,20 @@ export function fetchOneRental(id) {
 
 export function createRental(rental) {
   return biAxios.post(BASE_URL, rental);
+}
+
+export function deleteRental(id) {
+  return async function (dispatch) {
+    dispatch({ type: DELETE_RENTAL });
+
+    try {
+      await biAxios.delete(BASE_URL + id);
+      dispatch({ type: DELETE_RENTAL_SUCCESS, id });
+    } catch (err) {
+      dispatch({
+        type: DELETE_RENTAL_FAILURE,
+        errors: err.response.data.errors || err.message,
+      });
+    }
+  };
 }
