@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-function RentalCard({ rental }) {
+function RentalCard({ rental, renderMenu }) {
   return (
-    <div className="col-md-3">
+    <div className="col-md-3 mb-4">
       <Link className="rental-link" to={`/rentals/${rental._id}`}>
         <div className="card bi-card">
           <img className="card-img-top" src={rental.image} alt={rental.title} />
@@ -17,6 +17,7 @@ function RentalCard({ rental }) {
           </div>
         </div>
       </Link>
+      {renderMenu && renderMenu()}
     </div>
   );
 }
