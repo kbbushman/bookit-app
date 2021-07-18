@@ -55,12 +55,36 @@ exports.createRental = async (req, res) => {
 };
 
 exports.updateRental = async (req, res) => {
-  // TODO: Finish update
-  return res.sendApiError({
-    title: 'Update Rental Error',
-    status: 500,
-    message: 'This rental update endpoint has not been completed.',
-  });
+  const { id } = req.params;
+  const rentalData = req.body;
+
+  try {
+    const rental = await Rental.findById(id).populate(
+      'owner',
+      '-password -__v'
+    );
+
+    if (!rental) {
+      return res.sendApiError({
+        title: 'Update Rental Error',
+        message: 'This requested rental does not exist',
+      });
+    }
+
+    if (rental.owner.id !== res.locals.user.id) {
+      return res.sendApiError({
+        title: 'Update Rental Error',
+        message: 'You do not have permission to update this rental',
+      });
+    }
+
+    rental.set(rentalData);
+    await rental.save();
+
+    res.json(rental);
+  } catch (err) {
+    res.sendMongoError(err);
+  }
 };
 
 exports.deleteRental = async (req, res) => {
