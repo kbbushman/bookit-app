@@ -12,6 +12,9 @@ import {
   DELETE_RENTAL,
   DELETE_RENTAL_SUCCESS,
   DELETE_RENTAL_FAILURE,
+  DELETE_USER_BOOKING,
+  DELETE_USER_BOOKING_SUCCESS,
+  DELETE_USER_BOOKING_FAILURE,
 } from 'actions/actionTypes';
 
 const initialState = { items: [], isLoading: false, errors: null };
@@ -51,6 +54,16 @@ function bookings(state = initialState, action) {
       return { items: action.bookings, isLoading: false, errors: null };
     case FETCH_USER_BOOKINGS_FAILURE:
       return { items: [], isLoading: false, errors: action.errors };
+    case DELETE_USER_BOOKING:
+      return { items: state.items, isLoading: true, errors: false };
+    case DELETE_USER_BOOKING_SUCCESS:
+      return {
+        items: state.items.filter((item) => item._id !== action.id),
+        isLoading: false,
+        errors: null,
+      };
+    case DELETE_USER_BOOKING_FAILURE:
+      return { items: state.items, isLoading: false, errors: action.errors };
     default:
       return state;
   }
