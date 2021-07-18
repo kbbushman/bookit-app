@@ -87,3 +87,7 @@ export function deleteRental(id) {
     }
   };
 }
+
+export function verifyRentalOwner(id) {
+  return biAxios.get(BASE_URL + id + '/verify-user');
+}
