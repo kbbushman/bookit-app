@@ -43,6 +43,30 @@ exports.getRentalById = async (req, res) => {
   }
 };
 
+exports.verifyUser = async (req, res) => {
+  try {
+    const rental = await Rental.findById(req.params.id);
+
+    if (!rental) {
+      return res.sendApiError({
+        title: 'Update Rental Error',
+        message: 'This requested rental does not exist',
+      });
+    }
+
+    if (rental.owner.toString() !== res.locals.user.id) {
+      return res.sendApiError({
+        title: 'Rental Owner Verification',
+        message: 'You are not the rental owner',
+      });
+    }
+
+    res.json({ status: 'Verified' });
+  } catch (err) {
+    res.sendMongoError(err);
+  }
+};
+
 exports.createRental = async (req, res) => {
   try {
     const rentalData = req.body;
