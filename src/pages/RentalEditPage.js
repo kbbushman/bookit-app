@@ -1,14 +1,39 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import RentalDetails from 'components/rental/RentalDetails';
 import RentalMedia from 'components/rental/RentalMedia';
-import { fetchOneRental } from 'actions';
+import { fetchOneRental, verifyRentalOwner } from 'actions';
+
+function withVerifyOwner(Component) {
+  return function (props) {
+    const { id } = useParams();
+    const [isVerified, setIsVerified] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      verifyRentalOwner(id)
+        .then(() => {
+          setIsVerified(true);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsVerified(false);
+          setIsLoading(false);
+        });
+    }, [id]);
+
+    if (!isVerified && !isLoading) {
+      return <Redirect to="/" />;
+    }
+
+    return <Component {...props} />;
+  };
+}
 
 function RentalEditPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((state) => state.auth);
   const {
     data: rental,
     isLoading,
@@ -41,4 +66,4 @@ function RentalEditPage() {
   );
 }
 
-export default RentalEditPage;
+export default withVerifyOwner(RentalEditPage);
