@@ -5,9 +5,11 @@ import { fetcReceivedBookings } from 'actions';
 
 function ManageRentalBookings() {
   const dispatch = useDispatch();
-  const { items: bookings } = useSelector(
-    (state) => state.manage.receivedBookings
-  );
+  const {
+    items: bookings,
+    isLoading,
+    errors,
+  } = useSelector((state) => state.manage.receivedBookings);
 
   useEffect(() => {
     dispatch(fetcReceivedBookings());
@@ -16,6 +18,8 @@ function ManageRentalBookings() {
   return (
     <div>
       <BookingList
+        isLoading={isLoading}
+        errors={errors}
         bookings={bookings}
         type="received"
         title={'Manage Received Bookings'}
