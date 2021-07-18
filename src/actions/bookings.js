@@ -7,6 +7,9 @@ import {
   FETCH_USER_BOOKINGS,
   FETCH_USER_BOOKINGS_FAILURE,
   FETCH_USER_BOOKINGS_SUCCESS,
+  DELETE_USER_BOOKING,
+  DELETE_USER_BOOKING_FAILURE,
+  DELETE_USER_BOOKING_SUCCESS,
 } from './actionTypes';
 
 const BASE_URL = '/bookings';
@@ -52,6 +55,22 @@ export function fetcReceivedBookings() {
     } catch (err) {
       dispatch({
         type: FETCH_OWNER_BOOKINGS_FAILURE,
+        errors: extractApiErrors(err.response || []),
+      });
+    }
+  };
+}
+
+export function deleteBooking(id) {
+  return async function (dispatch) {
+    dispatch({ type: DELETE_USER_BOOKING });
+
+    try {
+      await biAxios.delete(BASE_URL + '/' + id);
+      dispatch({ type: DELETE_USER_BOOKING_SUCCESS, id });
+    } catch (err) {
+      dispatch({
+        type: DELETE_USER_BOOKING_FAILURE,
         errors: extractApiErrors(err.response || []),
       });
     }
