@@ -1,10 +1,22 @@
 import { Link } from 'react-router-dom';
 import { capitalize } from 'utils/helpers';
+import ApiErrors from '../forms/ApiErrors';
 
-function BookingList({ bookings, type, title }) {
+function BookingList({
+  bookings,
+  type,
+  title,
+  handleDeleteBooking,
+  isLoading,
+  errors,
+}) {
   return (
     <section className="booking-listing">
       <h1 className="page-title">{title}</h1>
+      {errors && <ApiErrors errors={errors} />}
+      {!isLoading && !bookings.length && (
+        <p className="alert alert-warning">No bookings created</p>
+      )}
       <div className="row">
         {bookings.map((booking) => (
           <div key={booking._id} className="col-md-4">
@@ -25,7 +37,12 @@ function BookingList({ bookings, type, title }) {
                   <span>Price: </span>{' '}
                   <span className="booking-price-value">${booking.price}</span>
                 </p>
-                <button className="btn btn-danger me-3">Delete</button>
+                <button
+                  className="btn btn-danger me-3"
+                  onClick={() => handleDeleteBooking(booking._id)}
+                >
+                  Delete
+                </button>
                 <Link
                   to={`/rentals/${booking.rental._id}`}
                   className="btn btn-bi-form"
