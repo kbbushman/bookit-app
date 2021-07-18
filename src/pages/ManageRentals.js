@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import RentalCard from 'components/rental/RentalCard';
 import { deleteRental, fetchUserRentals } from 'actions';
@@ -30,12 +31,20 @@ function ManageRentals() {
         key={rental._id}
         rental={rental}
         renderMenu={() => (
-          <button
-            className="btn btn-danger"
-            onClick={() => handleDeleteRental(rental._id)}
-          >
-            Delete
-          </button>
+          <>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleDeleteRental(rental._id)}
+            >
+              Delete
+            </button>
+            <Link
+              to={`/rentals/${rental._id}/edit`}
+              className="btn btn-warning ms-2"
+            >
+              Edit
+            </Link>
+          </>
         )}
       />
     ));
