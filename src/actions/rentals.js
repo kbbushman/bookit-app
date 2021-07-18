@@ -1,4 +1,5 @@
 import axiosService from 'services/AxiosService';
+import { extractApiErrors } from '../utils/helpers';
 import {
   FETCH_RENTALS,
   FETCH_RENTALS_SUCCESS,
@@ -29,7 +30,7 @@ export function fetchRentals(location) {
     } catch (err) {
       dispatch({
         type: FETCH_RENTALS_FAILURE,
-        errors: err.response.data.errors || err.message,
+        errors: extractApiErrors(err.response || []),
       });
     }
   };
@@ -45,7 +46,7 @@ export function fetchUserRentals() {
     } catch (err) {
       dispatch({
         type: FETCH_USER_RENTALS_FAILURE,
-        errors: err.response.data.errors || err.message,
+        errors: extractApiErrors(err.response || []),
       });
     }
   };
@@ -61,7 +62,7 @@ export function fetchOneRental(id) {
     } catch (err) {
       dispatch({
         type: FETCH_ONE_RENTAL_FAILURE,
-        errors: err.response.data.errors || err.message,
+        errors: extractApiErrors(err.response || []),
       });
     }
   };
@@ -81,7 +82,7 @@ export function deleteRental(id) {
     } catch (err) {
       dispatch({
         type: DELETE_RENTAL_FAILURE,
-        errors: err.response.data.errors || err.message,
+        errors: extractApiErrors(err.response || []),
       });
     }
   };
