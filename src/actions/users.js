@@ -8,14 +8,14 @@ const { biAxios } = axiosService;
 export function registerUser(registerData) {
   return biAxios
     .post(BASE_URL + 'register', registerData)
-    .catch((err) => Promise.reject(extractApiErrors(err.response || {})));
+    .catch((err) => Promise.reject(extractApiErrors(err.response || [])));
 }
 
 export function logInUser(loginData) {
   return biAxios
     .post(BASE_URL + 'login', loginData)
     .then((res) => res.data)
-    .catch((err) => Promise.reject(extractApiErrors(err.response || {})));
+    .catch((err) => Promise.reject(extractApiErrors(err.response || [])));
 }
 
 export function logOutUser() {
