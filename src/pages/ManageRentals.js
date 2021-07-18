@@ -2,10 +2,15 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RentalCard from 'components/rental/RentalCard';
 import { deleteRental, fetchUserRentals } from 'actions';
+import ApiErrors from '../components/forms/ApiErrors';
 
 function ManageRentals() {
   const dispatch = useDispatch();
-  const { items: rentals } = useSelector((state) => state.manage.rentals);
+  const {
+    items: rentals,
+    isLoading,
+    errors,
+  } = useSelector((state) => state.manage.rentals);
 
   useEffect(() => {
     dispatch(fetchUserRentals());
@@ -39,7 +44,13 @@ function ManageRentals() {
   return (
     <div className="card-list">
       <h1 className="page-title">Manage Your Rentals</h1>
+      {errors && <ApiErrors errors={errors} />}
       <div className="row">{renderRentals()}</div>
+      {!isLoading && !rentals.length && (
+        <p className="alert alert-warning">
+          You have not created any rentals yet
+        </p>
+      )}
     </div>
   );
 }
