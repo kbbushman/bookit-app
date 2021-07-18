@@ -10,6 +10,7 @@ import RentalSearchPage from 'pages/RentalSearchPage';
 import ManageRentals from 'pages/ManageRentals';
 import ManageBookings from 'pages/ManageBookings';
 import ManageRentalBookings from 'pages/ManageRentalBookings';
+import RentalEditPage from 'pages/RentalEditPage';
 
 function Routes() {
   return (
@@ -18,6 +19,7 @@ function Routes() {
       <GuestRoute path="/login" component={LoginPage} />
       <GuestRoute path="/register" component={RegisterPage} />
       <AuthRoute path="/rentals/new" component={RentalNewPage} />
+      <AuthRoute path="/rentals/:id/edit" component={RentalEditPage} />
       <AuthRoute path="/rentals/manage" component={ManageRentals} />
       <AuthRoute path="/bookings/manage" component={ManageBookings} />
       <AuthRoute path="/bookings/received" component={ManageRentalBookings} />
