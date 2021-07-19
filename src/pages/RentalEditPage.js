@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import RentalDetails from 'components/rental/RentalDetails';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
 import RentalMedia from 'components/rental/RentalMedia';
-import { fetchOneRental, verifyRentalOwner } from 'actions';
+import RentalFeatures from 'components/rental/RentalFeatures';
+import EditableInput from 'components/editable/EditableInput';
+import ApiErrors from 'components/forms/ApiErrors';
+import { fetchOneRental, verifyRentalOwner, updateRental } from 'actions';
+import { capitalize } from 'utils/helpers';
 
 function withVerifyOwner(Component) {
   return function (props) {
@@ -44,13 +49,23 @@ function RentalEditPage() {
     dispatch(fetchOneRental(id));
   }, [id, dispatch]);
 
-  if (isLoading || !rental._id) return null;
+  async function handleUpdateRental(rentalData, onSuccess, onError) {
+    try {
+      await dispatch(updateRental(id, rentalData));
+      onSuccess();
+    } catch (err) {
+      toast.error(err[0].message, {
+        autoClose: 4000,
+      });
+      onError();
+    }
+  }
 
-  if (errors) return <h2>{errors[0].message}</h2>;
+  if (isLoading && !rental._id) return null;
 
   return (
     <section id="rentalDetails">
-      <h1>Rental Edit</h1>
+      {errors && <ApiErrors errors={errors} />}
       <div className="upper-section">
         <RentalMedia rental={rental} />
       </div>
@@ -58,7 +73,44 @@ function RentalEditPage() {
       <div className="details-section">
         <div className="row">
           <div className="col-md-7 col-lg-7 col-xl-8">
-            <RentalDetails rental={rental} />
+            <div className="rental">
+              <h2 className={`rental-type type-${rental.category}`}>
+                {rental.shared && 'Shared'} {rental.category}
+              </h2>
+              <EditableInput
+                className="rental-title"
+                field="title"
+                entity={rental}
+                handleUpdateRental={handleUpdateRental}
+              />
+              <EditableInput
+                className="rental-city"
+                field="city"
+                entity={rental}
+                handleUpdateRental={handleUpdateRental}
+              />
+              <EditableInput
+                className="rental-city"
+                field="street"
+                entity={rental}
+                handleUpdateRental={handleUpdateRental}
+              />
+              <div className="rental-room-info">
+                <span>
+                  <FontAwesomeIcon icon="building" />
+                  {rental.numOfRooms} bedrooms
+                </span>
+                <span>
+                  <FontAwesomeIcon icon="user" /> {rental.numOfRooms + 4} guests
+                </span>
+                <span>
+                  <FontAwesomeIcon icon="bed" /> {rental.numOfRooms + 2} beds
+                </span>
+              </div>
+              <p className="rental-description">{rental.description}</p>
+              <hr />
+              <RentalFeatures />
+            </div>
           </div>
         </div>
       </div>
