@@ -13,6 +13,8 @@ import {
   DELETE_RENTAL,
   DELETE_RENTAL_SUCCESS,
   DELETE_RENTAL_FAILURE,
+  UPDATE_RENTAL,
+  UPDATE_RENTAL_SUCCESS,
 } from './actionTypes';
 
 const BASE_URL = '/rentals/';
@@ -70,6 +72,18 @@ export function fetchOneRental(id) {
 
 export function createRental(rental) {
   return biAxios.post(BASE_URL, rental);
+}
+
+export function updateRental(id, rentalData) {
+  return async function (dispatch) {
+    dispatch({ type: UPDATE_RENTAL });
+    try {
+      const { data } = await biAxios.put(BASE_URL + id, rentalData);
+      dispatch({ type: UPDATE_RENTAL_SUCCESS, rental: data });
+    } catch (err) {
+      return Promise.reject(extractApiErrors(err.response || []));
+    }
+  };
 }
 
 export function deleteRental(id) {
