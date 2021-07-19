@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RentalFeatures from './RentalFeatures';
 import { capitalize } from 'utils/helpers';
 
@@ -20,14 +21,14 @@ function RentalDetails({ rental }) {
       <h2 className="rental-city">{capitalize(rental.city)}</h2>
       <div className="rental-room-info">
         <span>
-          <i className="fa fa-building"></i>
+          <FontAwesomeIcon icon="building" />
           {rental.numOfRooms} bedrooms
         </span>
         <span>
-          <i className="fa fa-user"></i> {rental.numOfRooms + 4} guests
+          <FontAwesomeIcon icon="user" /> {rental.numOfRooms + 4} guests
         </span>
         <span>
-          <i className="fa fa-bed"></i> {rental.numOfRooms + 2} beds
+          <FontAwesomeIcon icon="bed" /> {rental.numOfRooms + 2} beds
         </span>
       </div>
       <p className="rental-description">{rental.description}</p>
