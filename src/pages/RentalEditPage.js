@@ -87,12 +87,14 @@ function RentalEditPage() {
                 className="rental-city"
                 field="city"
                 entity={rental}
+                transformView={(value) => capitalize(value)}
                 handleUpdateRental={handleUpdateRental}
               />
               <EditableInput
-                className="rental-city"
+                className="rental-street"
                 field="street"
                 entity={rental}
+                transformView={(value) => capitalize(value)}
                 handleUpdateRental={handleUpdateRental}
               />
               <div className="rental-room-info">
