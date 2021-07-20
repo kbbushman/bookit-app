@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-function EditableInput({ entity, field, className, handleUpdateRental }) {
+function EditableInput({
+  entity,
+  field,
+  className,
+  handleUpdateRental,
+  transformView,
+}) {
   const [value, setValue] = useState(entity[field]);
   const [originalValue, setOriginalValue] = useState(entity[field]);
   const [isActiveInput, setIsActiveInput] = useState(false);
@@ -32,7 +38,7 @@ function EditableInput({ entity, field, className, handleUpdateRental }) {
       return (
         <>
           <input
-            className={className}
+            className={`editable-item ${className}`}
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
@@ -58,7 +64,9 @@ function EditableInput({ entity, field, className, handleUpdateRental }) {
 
     return (
       <>
-        <span className={className}>{value}</span>
+        <span className={`editable-item ${className}`}>
+          {transformView ? transformView(value) : value}
+        </span>
         <div className="button-container">
           <button
             onClick={() => setIsActiveInput(true)}
