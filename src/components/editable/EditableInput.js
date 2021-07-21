@@ -6,6 +6,7 @@ function EditableInput({
   className,
   handleUpdateRental,
   transformView,
+  inline,
 }) {
   const [value, setValue] = useState(entity[field]);
   const [originalValue, setOriginalValue] = useState(entity[field]);
@@ -70,7 +71,7 @@ function EditableInput({
         <div className="button-container">
           <button
             onClick={() => setIsActiveInput(true)}
-            className="btn btn-sm btn-warning ms-3 btn-editable"
+            className="btn btn-sm btn-warning btn-editable"
             autoFocus={false}
           >
             Edit
@@ -80,7 +81,13 @@ function EditableInput({
     );
   }
 
-  return <div className="editable-component">{renderView()}</div>;
+  return (
+    <div
+      className={`editable-component ${inline && 'editable-component-inline'}`}
+    >
+      {renderView()}
+    </div>
+  );
 }
 
 export default EditableInput;
