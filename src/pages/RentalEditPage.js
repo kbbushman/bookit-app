@@ -99,8 +99,15 @@ function RentalEditPage() {
               />
               <div className="rental-room-info">
                 <span>
-                  <FontAwesomeIcon icon="building" />
-                  {rental.numOfRooms} bedrooms
+                  <FontAwesomeIcon icon="building" />{' '}
+                  <EditableInput
+                    className="mr-0"
+                    field="numOfRooms"
+                    inline={true}
+                    entity={rental}
+                    handleUpdateRental={handleUpdateRental}
+                  />{' '}
+                  bedrooms
                 </span>
                 <span>
                   <FontAwesomeIcon icon="user" /> {rental.numOfRooms + 4} guests
