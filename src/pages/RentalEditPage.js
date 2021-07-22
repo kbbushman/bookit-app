@@ -99,7 +99,7 @@ function RentalEditPage() {
               />
               <div className="rental-room-info">
                 <span>
-                  <FontAwesomeIcon icon="building" />{' '}
+                  <FontAwesomeIcon icon="building" className="me-1" />
                   <EditableInput
                     className="mr-0"
                     field="numOfRooms"
@@ -110,10 +110,12 @@ function RentalEditPage() {
                   bedrooms
                 </span>
                 <span>
-                  <FontAwesomeIcon icon="user" /> {rental.numOfRooms + 4} guests
+                  <FontAwesomeIcon icon="user" className="ms-3 me-1" />{' '}
+                  {rental.numOfRooms + 4} guests
                 </span>
                 <span>
-                  <FontAwesomeIcon icon="bed" /> {rental.numOfRooms + 2} beds
+                  <FontAwesomeIcon icon="bed" className="ms-3 me-1" />{' '}
+                  {rental.numOfRooms + 2} beds
                 </span>
               </div>
               <p className="rental-description">{rental.description}</p>
