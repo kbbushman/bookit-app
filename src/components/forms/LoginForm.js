@@ -54,7 +54,7 @@ function LoginForm({ onSubmit }) {
           render={({ message }) => <span>{message}</span>}
         />
       </div>
-      <button type="submit" className="btn btn-bi-main">
+      <button type="submit" className="btn btn-bi-form">
         Submit
       </button>
     </form>
