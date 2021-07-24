@@ -7,6 +7,7 @@ import RentalMedia from 'components/rental/RentalMedia';
 import RentalFeatures from 'components/rental/RentalFeatures';
 import EditableInput from 'components/editable/EditableInput';
 import ApiErrors from 'components/forms/ApiErrors';
+import EditableTextarea from 'components/editable/EditableTextarea';
 import { fetchOneRental, verifyRentalOwner, updateRental } from 'actions';
 import { capitalize } from 'utils/helpers';
 
@@ -118,7 +119,14 @@ function RentalEditPage() {
                   {rental.numOfRooms + 2} beds
                 </span>
               </div>
-              <p className="rental-description">{rental.description}</p>
+              <EditableTextarea
+                className="rental-description mr-0"
+                field="description"
+                entity={rental}
+                rows={5}
+                cols={70}
+                handleUpdateRental={handleUpdateRental}
+              />
               <hr />
               <RentalFeatures />
             </div>
