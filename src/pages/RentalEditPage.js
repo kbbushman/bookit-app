@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 import RentalMedia from 'components/rental/RentalMedia';
 import RentalFeatures from 'components/rental/RentalFeatures';
 import EditableInput from 'components/editable/EditableInput';
-import ApiErrors from 'components/forms/ApiErrors';
 import EditableTextarea from 'components/editable/EditableTextarea';
+import EditableSelect from 'components/editable/EditableSelect';
+import ApiErrors from 'components/forms/ApiErrors';
 import { fetchOneRental, verifyRentalOwner, updateRental } from 'actions';
 import { capitalize } from 'utils/helpers';
 
@@ -75,9 +76,22 @@ function RentalEditPage() {
         <div className="row">
           <div className="col-md-7 col-lg-7 col-xl-8">
             <div className="rental">
-              <h2 className={`rental-type type-${rental.category}`}>
-                {rental.shared && 'Shared'} {rental.category}
-              </h2>
+              <span className="rental-city">Shared? </span>
+              <EditableSelect
+                className={`rental-type type-${rental.category}`}
+                field="shared"
+                entity={rental}
+                options={[true, false]}
+                inline={true}
+                handleUpdateRental={handleUpdateRental}
+              />
+              <EditableSelect
+                className={`rental-type type-${rental.category}`}
+                field="category"
+                entity={rental}
+                options={['apartment', 'condo', 'house']}
+                handleUpdateRental={handleUpdateRental}
+              />
               <EditableInput
                 className="rental-title"
                 field="title"
