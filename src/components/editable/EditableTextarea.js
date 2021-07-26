@@ -35,6 +35,14 @@ function EditableTextarea({
     }
   }
 
+  function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      update();
+    } else if (event.key === 'Escape') {
+      handleCancel();
+    }
+  }
+
   function renderView() {
     if (isActiveInput) {
       return (
@@ -45,6 +53,7 @@ function EditableTextarea({
             cols={cols}
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <div className="button-container">
             <button
