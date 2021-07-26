@@ -34,6 +34,14 @@ function EditableSelect({
     }
   }
 
+  function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      update();
+    } else if (event.key === 'Escape') {
+      handleCancel();
+    }
+  }
+
   function renderOptions(options) {
     return options.map((option) => (
       <option key={option} value={option}>{`${option}`}</option>
@@ -48,6 +56,7 @@ function EditableSelect({
             className={`editable-item ${className}`}
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onKeyDown={handleKeyDown}
           >
             {renderOptions(options)}
           </select>
