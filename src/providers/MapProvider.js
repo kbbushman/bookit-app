@@ -19,6 +19,23 @@ export function MapProvider({ children, apiKey }) {
     return map;
   }
 
+  function removeMarkers() {
+    removeElemenstByClassname('bi-marker');
+  }
+
+  function removePopups() {
+    removeElemenstByClassname('bi-popup');
+  }
+
+  function removeElemenstByClassname(className) {
+    const elements = document.getElementsByClassName(className);
+
+    while (elements.length > 0) {
+      const element = elements[0];
+      element.parentNode.removeChild(element);
+    }
+  }
+
   function normalizeLocation(location) {
     return location.replace(/\s/g, '').toLowerCase();
   }
@@ -63,6 +80,8 @@ export function MapProvider({ children, apiKey }) {
   }
 
   function addMarker(map, position) {
+    removeMarkers();
+
     const markerDiv = document.createElement('div');
     markerDiv.className = 'bi-marker';
 
@@ -74,6 +93,8 @@ export function MapProvider({ children, apiKey }) {
   }
 
   function addPopupMessage(map, message) {
+    removePopups();
+
     new tt.Popup({
       className: 'bi-popup',
       closeButton: false,
