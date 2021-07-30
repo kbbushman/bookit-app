@@ -7,6 +7,7 @@
 - Mongoose
 - BcryptJS
 - JWT
+- Multr
 - React
 - Redux
 - Redux Thunk
