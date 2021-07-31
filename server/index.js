@@ -2,6 +2,7 @@ const express = require('express');
 const rentalsRoutes = require('./routes/rentals');
 const usersRoutes = require('./routes/users');
 const bookingsRoutes = require('./routes/bookings');
+const imageUploadRoutes = require('./routes/imageUploads');
 const { provideErrorHandlers } = require('./middlewares');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(provideErrorHandlers);
 app.use('/api/v1/rentals', rentalsRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/bookings', bookingsRoutes);
+app.use('/api/v1/image-upload', imageUploadRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
