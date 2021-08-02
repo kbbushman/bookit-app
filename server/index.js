@@ -2,7 +2,7 @@ const express = require('express');
 const rentalsRoutes = require('./routes/rentals');
 const usersRoutes = require('./routes/users');
 const bookingsRoutes = require('./routes/bookings');
-const imageUploadRoutes = require('./routes/imageUploads');
+const imageUploadRoutes = require('./routes/imageUpload');
 const { provideErrorHandlers } = require('./middlewares');
 
 const app = express();

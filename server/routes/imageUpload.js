@@ -16,7 +16,7 @@ const singleUploadCtrl = (req, res, next) => {
   });
 };
 
-router.post('/', authRequired, singleUploadCtrl, (res, res) => {
+router.post('/', authRequired, singleUploadCtrl, (req, res) => {
   try {
     if (!req.file) {
       throw new Error('No image was found in upload');
