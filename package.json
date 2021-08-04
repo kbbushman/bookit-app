@@ -14,6 +14,7 @@
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.0.2",
+    "datauri": "^3.0.0",
     "date-fns": "^2.22.1",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
