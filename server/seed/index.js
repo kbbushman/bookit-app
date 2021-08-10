@@ -1,5 +1,5 @@
-const { Rental, User, Booking } = require('../models');
-const { userData, rentalData } = require('./data');
+const { Rental, User, Booking, CloudinaryImage } = require('../models');
+const { userData, rentalData, imageData } = require('./data');
 
 // ANSI color codes
 const cyan = '\u001b[36m';
@@ -28,9 +28,11 @@ async function addDocuments(collectionName, Model, data) {
     await deleteDocuments('users', User);
     await deleteDocuments('rentals', Rental);
     await deleteDocuments('bookings', Booking);
+    await deleteDocuments('images', CloudinaryImage);
 
     await addDocuments('users', User, userData);
     await addDocuments('rentals', Rental, rentalData);
+    await addDocuments('images', CloudinaryImage, imageData);
   } catch (err) {
     console.log(red, 'BookIt Databse Reset Error!');
     console.log(err);
