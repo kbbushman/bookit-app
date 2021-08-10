@@ -6,7 +6,7 @@ exports.getRentals = async (req, res) => {
   const query = city ? { city: city.toLowerCase() } : {};
 
   try {
-    const rentals = await Rental.find(query);
+    const rentals = await Rental.find(query).populate('image');
     res.json(rentals);
   } catch (err) {
     res.sendMongoError(err);
@@ -17,7 +17,7 @@ exports.getUserRentals = async (req, res) => {
   const { user } = res.locals;
 
   try {
-    const rentals = await Rental.find({ owner: user });
+    const rentals = await Rental.find({ owner: user }).populate('image');
     res.json(rentals);
   } catch (err) {
     res.sendMongoError(err);
@@ -26,10 +26,9 @@ exports.getUserRentals = async (req, res) => {
 
 exports.getRentalById = async (req, res) => {
   try {
-    const rental = await Rental.findById(req.params.id).populate(
-      'owner',
-      '-password -_id -updatedAt -__v'
-    );
+    const rental = await Rental.findById(req.params.id)
+      .populate('owner', '-password -_id -updatedAt -__v')
+      .populate('image');
     if (!rental) {
       return res.sendApiError({
         title: 'Find Rental Error',
