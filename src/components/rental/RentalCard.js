@@ -5,7 +5,11 @@ function RentalCard({ rental, renderMenu }) {
     <div className="col-md-3 mb-4">
       <Link className="rental-link" to={`/rentals/${rental._id}`}>
         <div className="card bi-card">
-          <img className="card-img-top" src={rental.image} alt={rental.title} />
+          <img
+            className="card-img-top"
+            src={rental.image.url}
+            alt={rental.title}
+          />
           <div className="card-body">
             <h6 className={`card-subtitle mb-0 type-${rental.category}`}>
               {rental.shared && 'Shared'} {rental.category} &#183; {rental.city}
