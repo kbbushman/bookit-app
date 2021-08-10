@@ -33,18 +33,50 @@ const userData = [
   },
 ];
 
+const imageData = [
+  {
+    _id: mongoose.Types.ObjectId(),
+    cloudinaryId: 'bookit-rentals/rental-one_qfgbd2',
+    url: 'https://res.cloudinary.com/k2sites/image/upload/v1628562157/bookit-rentals/rental-one_qfgbd2.jpg',
+  },
+  {
+    _id: mongoose.Types.ObjectId(),
+    cloudinaryId: 'bookit-rentals/rental-two_zexhbb',
+    url: 'https://res.cloudinary.com/k2sites/image/upload/v1628562170/bookit-rentals/rental-two_zexhbb.jpg',
+  },
+  {
+    _id: mongoose.Types.ObjectId(),
+    cloudinaryId: 'bookit-rentals/rental-three_yhxuqk',
+    url: 'https://res.cloudinary.com/k2sites/image/upload/v1628562182/bookit-rentals/rental-three_yhxuqk.jpg',
+  },
+  {
+    _id: mongoose.Types.ObjectId(),
+    cloudinaryId: 'bookit-rentals/rental-four_gucuxf',
+    url: 'https://res.cloudinary.com/k2sites/image/upload/v1628562191/bookit-rentals/rental-four_gucuxf.jpg',
+  },
+  {
+    _id: mongoose.Types.ObjectId(),
+    cloudinaryId: 'bookit-rentals/rental-five_olggik',
+    url: 'https://res.cloudinary.com/k2sites/image/upload/v1628562201/bookit-rentals/rental-five_olggik.jpg',
+  },
+  {
+    _id: mongoose.Types.ObjectId(),
+    cloudinaryId: 'bookit-rentals/rental-six_ursvxl',
+    url: 'https://res.cloudinary.com/k2sites/image/upload/v1628562213/bookit-rentals/rental-six_ursvxl.jpg',
+  },
+];
+
 const rentalData = [
   {
     title: 'Nice ocean view',
     city: 'San Francisco',
     street: '2nd St',
     category: 'condo',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 4,
     shared: true,
     description: 'Spacious condo with a beautiful ocean view.',
     dailyPrice: 99,
+    image: imageData[0]._id,
     owner: userData[0]._id,
   },
   {
@@ -52,12 +84,11 @@ const rentalData = [
     city: 'New York',
     street: '17 W 32nd St',
     category: 'apartment',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 1,
     shared: false,
     description: 'Modern spacious apartment in the center of the city.',
     dailyPrice: 130,
+    image: imageData[1]._id,
     owner: userData[0]._id,
   },
   {
@@ -65,12 +96,11 @@ const rentalData = [
     city: 'London',
     street: 'Bull Inn Court,',
     category: 'house',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 5,
     shared: false,
     description: 'Spacious and luxurious house in a very popular neighborhood.',
     dailyPrice: 150,
+    image: imageData[2]._id,
     owner: userData[1]._id,
   },
   {
@@ -78,12 +108,11 @@ const rentalData = [
     city: 'san francisco',
     street: '100 market st',
     category: 'apartment',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 2,
     description: 'This is just a test.',
     dailyPrice: 130,
     shared: true,
+    image: imageData[3]._id,
     owner: userData[0]._id,
   },
   {
@@ -91,12 +120,11 @@ const rentalData = [
     city: 'san francisco',
     street: '400 howard st',
     category: 'condo',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 4,
     description: 'This is just a test.',
     dailyPrice: 99,
     shared: true,
+    image: imageData[4]._id,
     owner: userData[0]._id,
   },
   {
@@ -104,12 +132,11 @@ const rentalData = [
     city: 'san francisco',
     street: '800 market st',
     category: 'apartment',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 3,
     description: 'This is just a test.',
     dailyPrice: 115,
     shared: false,
+    image: imageData[5]._id,
     owner: userData[0]._id,
   },
   {
@@ -117,12 +144,11 @@ const rentalData = [
     city: 'san francisco',
     street: '55 montgomery st',
     category: 'house',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 2,
     description: 'This is just a test.',
     dailyPrice: 145,
     shared: false,
+    image: imageData[0]._id,
     owner: userData[0]._id,
   },
   {
@@ -130,12 +156,11 @@ const rentalData = [
     city: 'san francisco',
     street: '22 Kearny st',
     category: 'house',
-    image:
-      'https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/5/image.jpeg',
     numOfRooms: 2,
     description: 'This is just a test.',
     dailyPrice: 95,
     shared: true,
+    image: imageData[1]._id,
     owner: userData[0]._id,
   },
 ];
@@ -143,4 +168,5 @@ const rentalData = [
 module.exports = {
   userData,
   rentalData,
+  imageData,
 };
