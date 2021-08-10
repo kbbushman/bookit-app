@@ -23,10 +23,6 @@ const rentalSchema = new mongoose.Schema(
       required: 'Category is required',
       lowercase: true,
     },
-    image: {
-      type: String,
-      required: 'Image is required',
-    },
     description: {
       type: String,
       required: 'Description is required',
@@ -42,6 +38,10 @@ const rentalSchema = new mongoose.Schema(
     shared: {
       type: Boolean,
       required: 'Shared is required',
+    },
+    image: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'CloudinaryImage',
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
