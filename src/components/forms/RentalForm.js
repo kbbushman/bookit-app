@@ -1,6 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import FormError from './FormError';
+import FileLoader from '../fileUpload/FileLoader';
 
 function RentalForm({ handleCreateRental }) {
   const {
@@ -101,7 +102,7 @@ function RentalForm({ handleCreateRental }) {
       </div>
 
       <div className="form-group mb-3">
-        <label htmlFor="image">Image URL</label>
+        {/* <label htmlFor="image">Image URL</label>
         <input
           type="text"
           className="form-control"
@@ -109,7 +110,8 @@ function RentalForm({ handleCreateRental }) {
           {...register('image', {
             required: 'Image URL is required',
           })}
-        />
+        /> */}
+        <FileLoader />
         <ErrorMessage
           name="image"
           errors={errors}
