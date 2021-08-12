@@ -111,6 +111,7 @@ function RentalForm({ handleCreateRental }) {
             required: 'Image URL is required',
           })}
         /> */}
+        <label htmlFor="image">Image</label>
         <FileLoader />
         <ErrorMessage
           name="image"
