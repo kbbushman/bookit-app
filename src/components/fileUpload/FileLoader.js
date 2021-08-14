@@ -36,7 +36,13 @@ function FileLoader() {
           onChange={handleChange}
         />
       </label>
-      {base64Image && <img src={base64Image} alt="Upload" />}
+      {base64Image && (
+        <div className="img-preview-container">
+          <div className="img-preview">
+            <img src={base64Image} alt="Upload" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
