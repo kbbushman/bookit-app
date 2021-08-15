@@ -4,6 +4,7 @@ import './FileLoader.scss';
 
 function FileLoader() {
   const [base64Image, setBase64image] = useState('');
+  const [imageStatus, setImageStatus] = useState('INIT');
   const [selectedImage, setSelectedImage] = useState(null);
 
   const fileReader = useMemo(() => {
@@ -12,6 +13,7 @@ function FileLoader() {
 
   function handleFileLoad(event) {
     setBase64image(event.target.result);
+    setImageStatus('LOADED');
   }
 
   useEffect(() => {
@@ -29,12 +31,13 @@ function FileLoader() {
   }
 
   function handleImageUpload() {
+    setImageStatus('PENDING');
     uploadImage(selectedImage)
       .then(() => {
-        alert('Image Uploaded!');
+        setImageStatus('UPLOADED');
       })
       .catch(() => {
-        alert('Image Upload Failed!');
+        setImageStatus('ERROR');
       });
   }
 
@@ -55,17 +58,36 @@ function FileLoader() {
             <div className="img-preview">
               <img src={base64Image} alt="Upload" />
             </div>
+            {imageStatus === 'PENDING' && (
+              <div className="spinner-container upload-status">Loading...</div>
+            )}
+
+            {imageStatus === 'UPLOADED' && (
+              <div className="alert alert-success upload-status">
+                Image successfully uploaded
+              </div>
+            )}
+
+            {imageStatus === 'ERROR' && (
+              <div className="alert alert-danger upload-status">
+                Image upload failed
+              </div>
+            )}
           </div>
-          <button
-            className="btn btn-success me-2"
-            type="button"
-            onClick={handleImageUpload}
-          >
-            Upload
-          </button>
-          <button className="btn btn-danger" type="button">
-            Cancel
-          </button>
+          {imageStatus === 'LOADED' && (
+            <>
+              <button
+                className="btn btn-success me-2"
+                type="button"
+                onClick={handleImageUpload}
+              >
+                Upload
+              </button>
+              <button className="btn btn-danger" type="button">
+                Cancel
+              </button>
+            </>
+          )}
         </>
       )}
     </div>
