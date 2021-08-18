@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { uploadImage } from 'actions/imageupload';
+import Spinner from 'components/shared/Spinner';
 import './FileLoader.scss';
 
 function FileLoader() {
@@ -68,7 +69,9 @@ function FileLoader() {
               <img src={base64Image} alt="Upload" />
             </div>
             {imageStatus === 'PENDING' && (
-              <div className="spinner-container upload-status">Loading...</div>
+              <div className="spinner-container upload-status">
+                <Spinner />
+              </div>
             )}
 
             {imageStatus === 'UPLOADED' && (
