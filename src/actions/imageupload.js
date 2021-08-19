@@ -7,5 +7,5 @@ export function uploadImage(image) {
   const formData = new FormData();
   formData.append('image', image);
 
-  return biAxios.post(BASE_URL, formData);
+  return biAxios.post(BASE_URL, formData).then((res) => res.data);
 }

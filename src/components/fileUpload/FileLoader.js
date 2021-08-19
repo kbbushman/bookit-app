@@ -3,7 +3,7 @@ import { uploadImage } from 'actions/imageupload';
 import Spinner from 'components/shared/Spinner';
 import './FileLoader.scss';
 
-function FileLoader() {
+function FileLoader({ onFileUpload }) {
   const imageInputRef = useRef();
   const [base64Image, setBase64image] = useState('');
   const [imageStatus, setImageStatus] = useState('INIT');
@@ -35,7 +35,8 @@ function FileLoader() {
   function handleImageUpload() {
     setImageStatus('PENDING');
     uploadImage(selectedImage)
-      .then(() => {
+      .then((uploadedImage) => {
+        onFileUpload(uploadedImage._id);
         setImageStatus('UPLOADED');
       })
       .catch(() => {

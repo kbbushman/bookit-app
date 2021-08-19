@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import FormError from './FormError';
@@ -7,10 +8,15 @@ function RentalForm({ handleCreateRental }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const rentalOptions = ['Apartment', 'Condo', 'House'];
+
+  useEffect(() => {
+    register('image');
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(handleCreateRental)}>
@@ -112,7 +118,7 @@ function RentalForm({ handleCreateRental }) {
           })}
         /> */}
         <label htmlFor="image">Image</label>
-        <FileLoader />
+        <FileLoader onFileUpload={(imageId) => setValue('image', imageId)} />
         <ErrorMessage
           name="image"
           errors={errors}
