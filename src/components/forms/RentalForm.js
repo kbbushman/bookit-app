@@ -16,7 +16,7 @@ function RentalForm({ handleCreateRental }) {
 
   useEffect(() => {
     register('image');
-  }, []);
+  }, [register]);
 
   return (
     <form onSubmit={handleSubmit(handleCreateRental)}>
