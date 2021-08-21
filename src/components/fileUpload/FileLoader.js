@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { uploadImage } from 'actions/imageupload';
 import Spinner from 'components/shared/Spinner';
+import ImageCrop from './ImageCrop';
 import './FileLoader.scss';
 
 function FileLoader({ onFileUpload }) {
@@ -13,21 +14,27 @@ function FileLoader({ onFileUpload }) {
     return new FileReader();
   }, []);
 
-  function handleFileLoad(event) {
-    setBase64image(event.target.result);
-    setImageStatus('LOADED');
-  }
+  // function handleFileLoad(event) {
+  //   setBase64image(event.target.result);
+  //   setImageStatus('LOADED');
+  // }
 
-  useEffect(() => {
-    fileReader.addEventListener('load', handleFileLoad);
+  // useEffect(() => {
+  //   fileReader.addEventListener('load', handleFileLoad);
 
-    return () => {
-      fileReader.removeEventListener('load', handleFileLoad);
-    };
-  }, [fileReader]);
+  //   return () => {
+  //     fileReader.removeEventListener('load', handleFileLoad);
+  //   };
+  // }, [fileReader]);
 
   function handleChange(event) {
     const file = event.target.files[0];
+
+    fileReader.onloadend = function (event) {
+      setBase64image(event.target.result);
+      setImageStatus('LOADED');
+    };
+
     fileReader.readAsDataURL(file);
     setSelectedImage(file);
   }
@@ -63,6 +70,7 @@ function FileLoader({ onFileUpload }) {
           ref={imageInputRef}
         />
       </label>
+      {base64Image && <ImageCrop src={base64Image} />}
       {base64Image && (
         <>
           <div className="img-preview-container mb-2">
