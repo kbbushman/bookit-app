@@ -1,46 +1,45 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { uploadImage } from 'actions/imageupload';
 import Spinner from 'components/shared/Spinner';
 import ImageCrop from './ImageCrop';
 import './FileLoader.scss';
 
+class ImageSnippet {
+  constructor(src, name, type) {
+    this.src = src;
+    this.name = name;
+    this.type = type;
+  }
+}
+
 function FileLoader({ onFileUpload }) {
   const imageInputRef = useRef();
-  const [base64Image, setBase64image] = useState('');
-  const [imageStatus, setImageStatus] = useState('INIT');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imageStatus, setImageStatus] = useState('INIT');
 
   const fileReader = useMemo(() => {
     return new FileReader();
   }, []);
 
-  // function handleFileLoad(event) {
-  //   setBase64image(event.target.result);
-  //   setImageStatus('LOADED');
-  // }
-
-  // useEffect(() => {
-  //   fileReader.addEventListener('load', handleFileLoad);
-
-  //   return () => {
-  //     fileReader.removeEventListener('load', handleFileLoad);
-  //   };
-  // }, [fileReader]);
-
   function handleChange(event) {
     const file = event.target.files[0];
 
     fileReader.onloadend = function (event) {
-      setBase64image(event.target.result);
+      const selectedImage = new ImageSnippet(
+        event.target.result,
+        file.name,
+        file.type
+      );
+      setSelectedImage(selectedImage);
       setImageStatus('LOADED');
     };
 
     fileReader.readAsDataURL(file);
-    setSelectedImage(file);
   }
 
   function handleImageUpload() {
     setImageStatus('PENDING');
+    // TODO: FIX
     uploadImage(selectedImage)
       .then((uploadedImage) => {
         onFileUpload(uploadedImage._id);
@@ -54,7 +53,6 @@ function FileLoader({ onFileUpload }) {
   function cancelImageUpload() {
     imageInputRef.current.value = null;
     setSelectedImage(null);
-    setBase64image('');
     setImageStatus('INIT');
   }
 
@@ -70,12 +68,12 @@ function FileLoader({ onFileUpload }) {
           ref={imageInputRef}
         />
       </label>
-      {base64Image && <ImageCrop src={base64Image} />}
-      {base64Image && (
+      {selectedImage && <ImageCrop src={selectedImage.src} />}
+      {selectedImage && (
         <>
           <div className="img-preview-container mb-2">
             <div className="img-preview">
-              <img src={base64Image} alt="Upload" />
+              <img src={selectedImage.src} alt="Upload" />
             </div>
             {imageStatus === 'PENDING' && (
               <div className="spinner-container upload-status">
