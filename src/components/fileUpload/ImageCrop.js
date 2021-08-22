@@ -11,14 +11,22 @@ const initialCropState = {
   aspect: 3 / 2,
 };
 
-function ImageCrop({ src }) {
+function ImageCrop({ src, handleImageLoaded, handleCropComplete }) {
   const [crop, setCrop] = useState(initialCropState);
 
   function handleChange(crop) {
     setCrop(crop);
   }
 
-  return <ReactCrop src={src} crop={crop} onChange={handleChange} />;
+  return (
+    <ReactCrop
+      src={src}
+      crop={crop}
+      onChange={handleChange}
+      onImageLoaded={handleImageLoaded}
+      onComplete={handleCropComplete}
+    />
+  );
 }
 
 export default ImageCrop;
